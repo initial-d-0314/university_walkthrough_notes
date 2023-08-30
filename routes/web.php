@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UniversityController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,4 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::controller(UniversityController::class)->middleware(['auth'])->group(function(){
+    Route::get('/university','index')->name('university_index');
+    Route::post('/university','store');
+    Route::put('/university','update');
+    Route::get('/university/create','create');
+    Route::get('/university/{university}/edit','edit');
+});
 require __DIR__.'/auth.php';
