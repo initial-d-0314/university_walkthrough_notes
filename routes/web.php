@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UniversityController;
-
+use App\Http\Controllers\GenreCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,10 +32,18 @@ Route::middleware('auth')->group(function () {
 
 
 Route::controller(UniversityController::class)->middleware(['auth'])->group(function(){
+    Route::get('/university/create','create');
+    Route::get('/university/{university}/edit','edit');
     Route::get('/university','index')->name('university_index');
     Route::post('/university','store');
     Route::put('/university','update');
-    Route::get('/university/create','create');
-    Route::get('/university/{university}/edit','edit');
+});
+
+Route::controller(GenreCategoryController::class)->middleware(['auth'])->group(function(){
+    Route::get('/category/create','create');
+    Route::get('/category/{category}/edit','edit');
+    Route::get('/category','index')->name('genrecategory_index');
+    Route::post('/category','store');
+    Route::put('/category','update');
 });
 require __DIR__.'/auth.php';
