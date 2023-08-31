@@ -14,6 +14,7 @@
         <form action="/university" method="post">
             @csrf
             <h1>大学情報追加</h1>
+            <hr>
             <h2>大学名</h2>
             <p>必須です。大学のキャンパス名まで含んだ名称です。略称ではなく正式名称で登録をお願いします。</p>
             <input type="text" name="university[name]" placeholder="大学名" value="{{ old('university.name') }}" /><br>

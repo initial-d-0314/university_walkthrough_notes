@@ -12,7 +12,7 @@
     <body>
       <h1>大学一覧</h1>
       <a href="/university/create">新規大学情報追加はこちら</a>
-<table>
+<table border="1" style="border-collapse: collapse">
   <thead>
     <tr>
     <th>大学名</th>
