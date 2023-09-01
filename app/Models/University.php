@@ -21,9 +21,10 @@ class University extends Model
         'nearest_station',
     ];
     
-    // UserAdditionalに対するリレーション（1対多）
-    public function useradditionals()
+    // Userに対するリレーション（1対多）
+    public function users()
     {
-        return $this->hasMany(UserAdditional::class);
+        return $this->hasMany(User::class);
     }
+
 }

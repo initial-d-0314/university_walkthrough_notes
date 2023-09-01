@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'section',
+        'grade',
+        'introduction',
+        'image_address',
+        'user_id',
+        'university_id', 
     ];
 
     /**
@@ -41,12 +47,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
-    // UserAdditionalに対するリレーション（1対1）
-    public function useradditional()
-    {
-        return $this->hasOne(UserAdditional::class);
-    }
 
     // Postに対するリレーション（1対多）
     public function posts()
@@ -69,6 +69,11 @@ class User extends Authenticatable
     public function helps()
     {
         return $this->hasMany(Help::class);
+    }
+    // Universityに対するリレーション（1対多）
+    public function university()
+    {
+        return $this->belongsTo(University::class);
     }
 
 }
