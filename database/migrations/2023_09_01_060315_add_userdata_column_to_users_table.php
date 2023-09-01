@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('user_additionals', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('university_id')->constrained();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('section', 100)->nullable();
+            $table->integer('grade')->nullable();
+            $table->string('introduction', 2000)->nullable();
+            $table->string('image_address', 300)->nullable();
+            $table->foreignId('university_id')->nullable()->constrained();
+            //外部キーもnullableにできるので利用する
         });
     }
 
@@ -26,9 +30,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('user_additionals', function (Blueprint $table) {
-            $table->dropForeign('user_additionals_user_id_foreign');
-            $table->dropColumn('user_id');
+        Schema::table('users', function (Blueprint $table) {
             $table->dropForeign('user_additionals_university_id_foreign');
             $table->dropColumn('university_id');
         });
