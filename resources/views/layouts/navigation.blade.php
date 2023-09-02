@@ -17,6 +17,9 @@
                     <x-nav-link :href="route('genrecategory_index')" :active="request()->routeIs('genrecategory_index')">
                         {{ __('カテゴリ一覧') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('postcomment_index')" :active="request()->routeIs('postcomment_index')">
+                        {{ __('投稿一覧') }}
+                    </x-nav-link>
                 </div>
             </div>
 

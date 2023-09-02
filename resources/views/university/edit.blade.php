@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{{ asset('/css/input.css')  }}" />
     </head>
     <body>
-        <form action="/university" method="post">
+        <form action="/university/{{$university->id}}" method="post">
             @csrf
             @method('PUT')
             <h1>大学情報追加</h1>
