@@ -12,6 +12,10 @@
     <h1>投稿一覧</h1>
     <p>ジャンル、カテゴリ、大学は検索画面へのリンクになっています</p>
     <p><a href = /post/create>新規投稿作成</a></p>
+<div class='seach_settings'>
+なんかうまいこと検索設定を表示するスペース</br>
+例：フリーワード「wifi」/カテゴリ「施設」
+</div>
     <div class='posts'>
         @foreach ($posts as $post)
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">

@@ -32,7 +32,9 @@
                 </h3>
             </div>
         </div>
-
+        @unless($comment->user->id == Auth::id())
+        このコメントの投稿者ではないので編集できません。
+        @else
         <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
             <div class="input_comment">
                 <form action="/post/comment/{{$post->id}}/{{$comment->id}}" method="POST">
@@ -78,6 +80,7 @@
                 </form>
             </div>
             <hr>
+            @endunless
             <a href="/post/{{$post->id}}">編集せず戻る</a>
 
         </div>
