@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('title', 100);
             $table->string('body', 2000);
-            $table->string('image_address', 100)->nullable();
-            $table->boolean('use_time');
+            $table->string('image_address', 300)->nullable();
+            $table->string('use_time',10)->nullable();
             $table->date('stdate')->nullable();
             $table->time('sttime')->nullable();
             $table->dateTime('start_time')->nullable();

@@ -29,6 +29,12 @@ class Post extends Model
         'end_time',
     ];
     
+    //要素が多すぎるけどeagerロードする
+    function getPaginateByLimit(int $limit_count = 5)
+    {
+    return $this::with(['genre','category','university','user'])->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
+    
     // Userに対するリレーション（1対多）
     public function user()
     {
@@ -51,4 +57,12 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);  
     }
+    
+    // Categoryに対するリレーション（1対多）
+    public function postcomments()   
+    {
+        return $this->hasMany(PostComment::class);  
+    }
+    
+    
 }

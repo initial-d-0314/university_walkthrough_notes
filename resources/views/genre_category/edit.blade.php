@@ -12,7 +12,7 @@
     <body>
     <h1>カテゴリ情報変更</h1>
 		<hr>
-        <form action="/category" method="post">
+        <form action="/category/{{$category->id}}" method="post">
             @csrf
             @method('PUT')
             <h2>所属ジャンル</h2>

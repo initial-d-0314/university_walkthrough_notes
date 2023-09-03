@@ -1,0 +1,5 @@
+'universityid'
+'categoryid'
+'genreid'
+'event':before/during/after/(nill)のどれか
+'keyword':フリーワード検索
