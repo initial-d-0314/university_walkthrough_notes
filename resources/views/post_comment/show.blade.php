@@ -89,5 +89,5 @@
         </div>
 
 </body>
-<・x-app-layout>
+</x-app-layout>
 </html>

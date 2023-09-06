@@ -20,6 +20,12 @@
                     <x-nav-link :href="route('postcomment_index')" :active="request()->routeIs('postcomment_index')">
                         {{ __('投稿一覧') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('useradditional_index')" :active="request()->routeIs('useradditional_index')">
+                        {{ __('ユーザーマイページ（仮設）') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('search_index')" :active="request()->routeIs('search_index')">
+                        {{ __('投稿検索（テスト）') }}
+                    </x-nav-link>
                 </div>
             </div>
 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\GenreCategoryController;
 use App\Http\Controllers\PostCommentController;
+use App\Http\Controllers\UserAdditionalController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,8 +63,18 @@ Route::controller(PostCommentController::class)->middleware(['auth'])->group(fun
     Route::get('/post/comment/{post}/{postcomment}/edit','commentedit');
     Route::put('/post/comment/{post}/{postcomment}','commentupdate');
     Route::post('/post/comment/','commentstore');
+    //検索機能
+    Route::get('/search','search')->name('search_index');
+    
 });
 
+Route::controller(UserAdditionalController::class)->middleware(['auth'])->group(function(){
+    Route::get('/useradditional/edit','edit');
+    Route::put('/useradditional/','update');
+    Route::get('/useradditional/','index')->name('useradditional_index');
+    
+    //(お気に入り投稿機能を探す)
+});
 
 
 require __DIR__.'/auth.php';

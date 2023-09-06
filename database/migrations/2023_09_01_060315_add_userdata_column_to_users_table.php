@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('section', 100)->nullable();
-            $table->integer('grade')->nullable();
+            $table->string('grade',30)->nullable();
             $table->string('introduction', 2000)->nullable();
             $table->string('image_address', 300)->nullable();
             $table->foreignId('university_id')->nullable()->constrained();
