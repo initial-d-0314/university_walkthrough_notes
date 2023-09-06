@@ -14,7 +14,10 @@ class UserAdditionalRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'additional.university_id' => 'sometimes|nullable|numeric',
+            'additional.grade' => 'sometimes|nullable|string',
+            'additional.section' => 'sometimes|nullable|string|max:100',
+            'additional.introduction' => 'sometimes|nullable|string|max:2000'
         ];
     }
 }

@@ -11,13 +11,14 @@
 <body>
     <h1>自分の投稿一覧</h1>
     <div>
-        <<!--画像予定地-->>
+        <!--画像予定地-->
         
-        <p>所属大学：{{$user->university->1d ?$user->university->name : "（未登録）"}}</p>
+        <p>所属大学：{{$user->university_id ?$user->university->name : "（未登録）"}}</p>
         <p>区分：{{$user->grade ? : "（未登録）"}}</p>
         <p>分野：{{$user->section ? : "（未登録）"}}</p>
-        <p>自己紹介：{{$user->description ? : "（未登録）"}}</p>
-        <p>[<a href="useradditional/edit">編集</a>]</p>
+        <p>自己紹介：{{$user->introduction ? : "（未登録）"}}</p>
+        <p>[<a href="/useradditional/edit">編集</a>]</p>
+        <p>[<a href="/useradditional/edit">お気に入り一覧(まだ)</a>]</p>
     </div>
     <div class='posts'>
         @foreach ($posts as $post)
@@ -25,9 +26,9 @@
                 <div class='post'>
                 <h1 class='title'>{{$post->title}}</h1>
                 <h2 class='user'>投稿ユーザー：<a href="users/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
-                <h2 class='university'>大学：<a href="{{route('postcomment_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
-                <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('postcomment_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
-                <a href="{{route('postcomment_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
+                <h2 class='university'>大学：<a href="{{route('search_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
+                <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
+                <a href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
                 @if($post->use_time == "use")
                 <h3 class='time'>
                     開始時刻：{{ $post->start_time }}

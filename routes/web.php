@@ -63,12 +63,17 @@ Route::controller(PostCommentController::class)->middleware(['auth'])->group(fun
     Route::get('/post/comment/{post}/{postcomment}/edit','commentedit');
     Route::put('/post/comment/{post}/{postcomment}','commentupdate');
     Route::post('/post/comment/','commentstore');
+    //検索機能
+    Route::get('/search','search')->name('search_index');
+    
 });
 
 Route::controller(UserAdditionalController::class)->middleware(['auth'])->group(function(){
     Route::get('/useradditional/edit','edit');
     Route::put('/useradditional/','update');
-    //Route::put('/useradditional/','update');(ユーザー個人ページとお気に入りと)
+    Route::get('/useradditional/','index')->name('useradditional_index');
+    
+    //(お気に入り投稿機能を探す)
 });
 
 

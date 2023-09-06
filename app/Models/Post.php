@@ -34,6 +34,12 @@ class Post extends Model
     {
     return $this::with(['genre','category','university','user'])->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
+    //ユーザーを限定して行う
+    function getPaginateByLimitwithUser(int $limit_count = 5)
+    {
+    $user_id = \Auth::user()->id;
+    return $this::with(['user'])->where('user_id',$user_id)->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    }
     
     // Userに対するリレーション（1対多）
     public function user()

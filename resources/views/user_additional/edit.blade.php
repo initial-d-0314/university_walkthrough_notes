@@ -24,7 +24,7 @@
             <select name="additional[university_id]">
                 <option value="">未設定</option>
                 @foreach($universities as $university)
-                @if($user->university->id == $university->id ||  old('post.university_id') == $university->id)
+                @if($user->university_id == $university->id ||  old('post.university_id') == $university->id)
                 <option value="{{ $university->id }}" selected>{{ $university->name }}</option>
                 @else
                 <option value="{{ $university->id }}">{{ $university->name }}</option>
@@ -42,7 +42,6 @@
                 
             <h2>区分選択</h2>
             <fieldset>
-            <legend>希望する連絡方法を選択してください。</legend>
             <div>
                 @if($user->grade == "" ||  old('additional.grade') == "")
                 <input type="radio" id="kubun0" name="additional[grade]" value="" />
@@ -83,7 +82,7 @@
             </div>
             </fieldset>
             
-            <h2>区分</h2>
+            <h2>分野</h2>
             <p>所属する分野です。</p>
             {{--エラーがある場合初期値を差し替える--}}
             @if($errors->any())
@@ -99,8 +98,8 @@
             @endforeach</div>
             @endif
             
-            <h2>紹介文</h2>
-            <textarea id="comment" name="additional[introduction]" placeholder="コメントを入力してください">{{ $errors->any() ? old('additional.introduction'): $user->introduction}}</textarea>
+            <h2>自己紹介文</h2>
+            <textarea id="comment" name="additional[introduction]" placeholder="自己紹介">{{ $errors->any() ? old('additional.introduction'): $user->introduction}}</textarea>
                 @if($errors->has('additional.introduction'))
                     <div class="validerror">
                         @foreach($errors->get('additional.introduction') as $message)
@@ -110,7 +109,7 @@
                 @endif
                 
             <h2>画像（未実装）</h2>
-            削除ボタンとかになると思うよ
+            <p>削除ボタンとかになると思うよ</p>
             <input type="submit" value="編集を確定する" />
         </form>
         <div class="footer">

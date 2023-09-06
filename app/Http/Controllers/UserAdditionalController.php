@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\University;
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Cloudinary;  //dev4_画像アップロード
@@ -32,6 +33,17 @@ class UserAdditionalController extends Controller
         $input_useradditional = $request['additional'];
         $user->fill($input_useradditional)->save();
         //updateでなくsaveを利用すれば変更がない場合にDBにアクセスしないという利点がある
-        return redirect('/category');
+        return redirect('/useradditional');
+    }
+    
+    public function index(Post $post)
+    {
+        $user_id = \Auth::user()->id;
+        $user = User::where("id",$user_id)->first();
+        
+        return view('user_additional.posts')->with([
+            'posts'=> $post->getPaginateByLimitwithUser(),
+            'user' => $user,
+        ]);
     }
 }
