@@ -19,7 +19,7 @@
             <select name="category[genre_id]">
                 <option value="">（ジャンルを選択してください）</option>
                 @foreach($genres as $genre)
-                <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+                <option value="{{ $genre->id }}" {{old('category.genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->name }}</option>
                 @endforeach
             </select>
             {{--エラーがある場合リストで全部見せる--}}
@@ -52,7 +52,6 @@
                 <li>{{$message}}</li>
                 @endforeach</div>
             @endif
-
             
         <input type="submit" value="カテゴリ追加"/>
         </form>

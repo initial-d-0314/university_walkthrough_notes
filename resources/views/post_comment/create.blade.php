@@ -40,17 +40,14 @@
             <p>必須です。投稿がどのジャンル、カテゴリに含まれているのかについてです。</p>
             <p>この一覧はジャンル・カテゴリ一覧ページと同じ順番で並んでいます。</p>
             <select name="post[category_id]">
+                <option value="">（ジャンルを選んでください）</option>
                 @foreach($genres as $genre)
                 <optgroup label="{{$genre->name}}:{{$genre->description}}">
                     @foreach($categories as $category)
                     {{--カテゴリのidとジャンルの所属しているカテゴリのidで判定を行う--}}
                     {{--ジャンルを一つづつ参照する方が安全性高い気がするけれど、カテゴリの編集は考えていないのでこの書き方で--}}
                     @continue($genre->id != $category->genre_id)
-                    @if(old('post.category_id') == $category->id)
-                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
-                    @else
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endif
+                        <option value="{{ $category->id }}" {{old('post.category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                     @endforeach
             </select>
@@ -67,11 +64,7 @@
             <p>この一覧は大学一覧ページと同じ順番で並んでいます。</p>
             <select name="post[university_id]">
                 @foreach($universities as $university)
-                @if(old('post.university_id') == $university->id)
-                <option value="{{ $university->id }}" selected>{{ $university->name }}</option>
-                @else
-                <option value="{{ $university->id }}">{{ $university->name }}</option>
-                @endif
+                <option value="{{ $university->id }}" {{old('post.university_id') == $university->id ? 'selected' : '' }}>{{ $university->name }}</option>
                 @endforeach
             </select>
             @if($errors->has('post.university_id'))
@@ -87,11 +80,7 @@
             <h2>開始時刻、終了時刻</h2>
             <p>イベントやキャンペーンの日時を記載できます。使用する場合は開始時刻と終了時刻の両方の入力が必要です。</p>
             <p>正確な値がわからない場合には適当な値でも構いません。また、半永久的に続く場合はできれば使用せず、本文に記載をお願いします。</p>
-            @if($errors->any() && old('post.use_time'))
-            <input type="checkbox" name="post[use_time]" value="use" checked/>
-            @else
-            <input type="checkbox" name="post[use_time]" value="use"/>
-            @endif
+            <input type="checkbox" name="post[use_time]" value="use" {{($errors->any() && old('post.use_time') == "use") ? 'checked' : '' }}/>
 
             <p>開始日時</p>
             <input type="date" name="post[stdate]" value="{{old('post.stdate')}}" />
@@ -136,7 +125,6 @@
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
-
 
             <h2>画像</h2>
             <p>画像を追加できます。</p>

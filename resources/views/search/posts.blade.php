@@ -11,7 +11,7 @@
 <body>
     <h1>投稿検索</h1>
     <div class='searchform'>
-        <form action="/search" method="post">
+        <form action="{{ route('search_before')}}" method="post">
         @CSRF
         @method('GET')
         大学：
@@ -97,7 +97,7 @@
             </div>
         @endforeach
         <div>
-            {{ $posts->appends(Request::only(['universityid','categoryid','genreid','event','keyword']))->onEachSide(5)->links() }}
+            {{ $posts->appends(request()->except(['_token','_method']))->onEachSide(5)->links() }}
             <!--class="paginationについてCSSでいじる必要あり-->
         </div>
 </body>

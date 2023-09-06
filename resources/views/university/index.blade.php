@@ -24,7 +24,7 @@
   <tbody>
     @foreach($universities as $university)
     <tr>
-      <td><a href="{{$university->id}}">{{$university->name}}</a></td>
+      <td><a href="{{route('search_index', ['univid' => $university->id])}}">{{$university->name}}</a></td>
       <td>@if($university->url)
       <a href="{{$university->url}}">公式サイト（外部）</a>
       @else

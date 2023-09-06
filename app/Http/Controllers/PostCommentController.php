@@ -131,7 +131,7 @@ class PostCommentController extends Controller
         //dd($request);
         //各種情報
         $userid = $request->input('userid');
-        $universityid = $request->input('univid');
+        $univid = $request->input('univid');
         $genreid = $request->input('genreid');
         $categoryid = $request->input('categoryid');
         //イベントの開催前、開催中、開催後、未設定
@@ -193,8 +193,8 @@ class PostCommentController extends Controller
                 $posts->where('user_id',$userid)->get();
         }
         /* 大学idから検索処理 */
-        if(!empty($universityid)) {
-                $posts->where('university_id',$universityid)->get();
+        if(!empty($univid)) {
+                $posts->where('university_id',$univid)->get();
         }
         /* ジャンルとカテゴリidから検索処理 */
         //両方入ることを事前にバリデーションで弾いておく
@@ -220,7 +220,7 @@ class PostCommentController extends Controller
         /* ペジネーション */
         // 5レコードずつ表示する(変更可能にしておきたいけどひとまず)
         $posts = $posts->paginate(5)->withQueryString();
-        return view('search.posts')->with([
+        return view('search.posts', ['univid' => $univid])->with([
             'posts' => $posts,
             'universities'=>$university->get(),
             'genres'=>$genre->get(),
@@ -228,5 +228,22 @@ class PostCommentController extends Controller
             'datas' => $array,
             ]);
         //ページを開き直すとともに、$postsの情報をHTMLへ送る
+    }
+    
+    //クエリ文字列入れたいという要望に備えて：
+    //名前付きのルートにリダイレクトで渡せば自然とのこと
+    //参考：https://stackoverflow.com/questions/54702550/how-to-add-query-string-to-laravel-view
+    public function search_before(Request $request){
+        return redirect()->route('search_index', [
+        'userid' => $request->input('userid'),
+        'univid' => $request->input('univid'),
+        'genreid' => $request->input('genreid'),
+        'categoryid' => $request->input('categoryid'),
+        'eventb' => $request->input('eventb'),
+        'eventd' => $request->input('eventd'),
+        'eventa' => $request->input('eventa'),
+        'eventn' => $request->input('eventn'),
+        'keyword' => $request->input('keyword')
+        ]);
     }
 }

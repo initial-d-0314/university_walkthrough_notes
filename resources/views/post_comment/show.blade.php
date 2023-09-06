@@ -14,9 +14,9 @@
             <div class='post'>
                 <h1 class='title'>{{$post->title}}</h1>
                 <h2 class='user'>投稿ユーザー：<a href="users/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
-                <h2 class='university'>大学：<a href="{{route('postcomment_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
-                <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('postcomment_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
-                <a href="{{route('postcomment_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
+                <h2 class='university'>大学：<a href="{{route('search_index', ['univid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
+                <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
+                <a href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
                 @if($post->use_time == "use")
                 <h3 class='time'>
                     開始時刻：{{ $post->start_time }}

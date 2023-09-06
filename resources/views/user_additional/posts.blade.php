@@ -56,7 +56,7 @@
             </div>
         @endforeach
         <div>
-            {{ $posts->appends(Request::only(['universityid','categoryid','genreid','event','keyword']))->onEachSide(5)->links() }}
+            {{ $posts->onEachSide(5)->links() }}
             <!--class="paginationについてCSSでいじる必要あり-->
         </div>
 </body>

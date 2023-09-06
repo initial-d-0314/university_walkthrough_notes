@@ -12,7 +12,7 @@
   <a href="/category/create">新規カテゴリ情報追加はこちら</a>
   @foreach($genres as $genre)
   <hr>
-  <h2><a href="{{$genre->id}}">{{$genre->name}}</a></h2>
+  <h2><a href="{{route('search_index', ['genreid' => $genre->id])}}">{{$genre->name}}</a></h2>
   <p>{{$genre->description}}</p>
   <table border="1">
     <thead>
@@ -26,7 +26,7 @@
       @foreach($categories as $category)
       @continue($category->genre->id != $genre->id)
       <tr>
-        <td><a href="{{$category->id}}">{{$category->name}}</a></td>
+        <td><a href="{{route('search_index', ['categoryid' => $category->id])}}">{{$category->name}}</a></td>
         <td>{{$category->description ?: "（未登録）"}}</td>
         <td><a href="/category/{{$category->id}}/edit">編集</a></td>
       </tr>
