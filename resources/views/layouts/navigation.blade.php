@@ -24,7 +24,7 @@
                         {{ __('ユーザーマイページ（仮設）') }}
                     </x-nav-link>
                     <x-nav-link :href="route('search_index')" :active="request()->routeIs('search_index')">
-                        {{ __('投稿検索（テスト）') }}
+                        {{ __('投稿検索') }}
                     </x-nav-link>
                 </div>
             </div>

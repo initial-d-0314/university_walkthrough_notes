@@ -28,8 +28,7 @@
 
             <h2>分類</h2>
             <p>大学の分類です。（例：理系、文系、スポーツ専門）</p>
-            <input type="text" name="university[section]" placeholder="分類"
-                value="{{ old('university.section') }}" /><br>
+            <input type="text" name="university[section]" placeholder="分類" value="{{ old('university.section') }}" /><br>
             {{-- エラーがある場合リストで全部見せる --}}
             @if ($errors->has('university.section'))
             <div class="validerror">
@@ -49,11 +48,9 @@
                     <li>{{ $message }}</li>
                 @endforeach</div>
             @endif
-
             <h2>URL</h2>
             <p>大学の公式サイトのURLです。</p>
-            <input type="text" name="university[url]" placeholder="公式サイトのURL"
-                value="{{ old('university.url') }}" /><br>
+            <input type="text" name="university[url]" placeholder="公式サイトのURL"value="{{ old('university.url') }}" /><br>
             {{-- エラーがある場合リストで全部見せる --}}
             @if ($errors->has('university.url'))
             <div class="validerror">
@@ -61,7 +58,6 @@
                     <li>{{ $message }}</li>
                 @endforeach</div>
             @endif
-
             <h2>最寄り駅</h2>
             <p>大学の最寄り駅です。一つでお願いします。（例：東急田園都市線・大井町線「二子玉川」駅）</p>
             <input type="text" name="university[nearest_station]" placeholder="大学名"
@@ -79,6 +75,5 @@
             <a href="/university">追加せず戻る</a>
         </div>
     </body>
-
 </html>
 </x-app-layout>

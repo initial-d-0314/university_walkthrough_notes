@@ -17,12 +17,8 @@
             <hr>
             <h2>大学名</h2>
             <p>必須です。大学のキャンパス名まで含んだ名称です。略称ではなく正式名称で登録をお願いします。</p>
-            {{--エラーがある場合初期値を差し替える--}}
-            @if($errors->any())
-                <input type="text" name="university[name]" value="{{old('university.name')}}"/>
-            @else
-                <input type="text" name="university[name]" value="{{$university->name}}"/>
-            @endif<br>
+            <input type="text" name="university[name]" value="{{ $errors->any() ? old('university.name'): $university->name}}"/>
+            <br>
             {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.name'))
             <div class="validerror">
@@ -33,12 +29,7 @@
 
             <h2>分類</h2>
             <p>大学の分類です。（例：理系、文系、スポーツ専門）</p>
-            {{--エラーがある場合初期値を差し替える--}}
-            @if($errors->any())
-                <input type="text" name="university[section]" value="{{old('university.section')}}"/>
-            @else
-                <input type="text" name="university[section]" value="{{$university->section}}"/>
-            @endif<br>
+            <input type="text" name="university[section]" value="{{ $errors->any() ? old('university.section'): $university->section}}"/>
             {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.section'))
             <div class="validerror">
@@ -49,11 +40,7 @@
 
             <h2>住所</h2>
             <p>大学の住所です。（例：東京都世田谷区宇奈根1-1-1）</p>
-            @if($errors->any())
-                <input type="text" name="university[address]" value="{{old('university.address')}}"/>
-            @else
-                <input type="text" name="university[address]" value="{{$university->address}}"/>
-            @endif<br>
+            <input type="text" name="university[address]" value="{{ $errors->any() ? old('university.address'): $university->address}}"/>
             {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.address'))
             <div class="validerror">
@@ -64,11 +51,8 @@
 
             <h2>URL</h2>
             <p>大学の公式サイトのURLです。</p>
-            @if($errors->any())
-                <input type="text" name="university[url]" value="{{old('university.url')}}"/>
-            @else
-                <input type="text" name="university[url]" value="{{$university->url}}"/>
-            @endif<br>
+            <input type="text" name="university[url]" value="{{ $errors->any() ? old('university.url'): $university->url}}{{old('university.url')}}"/>
+            <br>
             {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.url'))
             <div class="validerror">
@@ -79,11 +63,8 @@
 
             <h2>最寄り駅</h2>
             <p>大学の最寄り駅です。一つでお願いします。（例：東急田園都市線・大井町線「二子玉川」駅）</p>
-            @if($errors->any())
-                <input type="text" name="university[nearest_station]" value="{{old('university.nearest_station')}}"/>
-            @else
-                <input type="text" name="university[nearest_station]" value="{{$university->nearest_station}}"/>
-            @endif<br>
+            <input type="text" name="university[nearest_station]" value="{{ $errors->any() ? old('university.nearest_station'): $university->nearest_station}}"/>
+            <br>
             {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.nearest_station'))
             <div class="validerror">

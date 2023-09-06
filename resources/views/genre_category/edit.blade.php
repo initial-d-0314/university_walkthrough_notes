@@ -20,12 +20,7 @@
             <select name="category[genre_id]">
                 <option value="">（ジャンルを選択してください）</option>
                 @foreach($genres as $genre)
-                @if($category->genre->id == $genre->id)
-                {{--初期値として扱う--}}
-                <option value="{{ $genre->id }}" selected>{{ $genre->name }}</option>
-                @else
-                <option value="{{ $genre->id }}">{{ $genre->name }}</option>
-                @endif
+                <option value="{{ $genre->id }}" {{(old('genreid') == $genre->id || $category->genre_id == $genre->id) ? 'selected' : '' }}>{{ $genre->name }}</option>
                 @endforeach
             </select>
             {{--エラーがある場合リストで全部見せる--}}
@@ -36,15 +31,10 @@
                 @endforeach</div>
             @endif
 
-
             <h2>カテゴリ名</h2>
             <p>必須です。カテゴリの名前です。（例：雨宿り）</p>
-            {{--エラーがある場合初期値を差し替える--}}
-            @if($errors->any())
-                <input type="text" name="category[name]" placeholder="カテゴリ名" value="{{old('category.name')}}"/>
-            @else
-                <input type="text" name="category[name]" placeholder="カテゴリ名" value="{{$category->name}}"/>
-            @endif<br>
+            <input type="text" name="category[name]" placeholder="カテゴリ名" value="{{ $errors->any() ? old('category.name'):$category->name}}"/>
+            <br>
             {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('category.name'))
             <div class="validerror">
@@ -55,12 +45,8 @@
 
             <h2>説明文</h2>
             <p>必須です。カテゴリについての説明文です。なるべく短くしてもらうと助かります。</p>
-            {{--エラーがある場合初期値を差し替える--}}
-            @if($errors->any())
-                <input type="text" name="category[description]" placeholder="説明文" value="{{old('category.description')}}"/>
-            @else
-                <input type="text" name="category[description]" placeholder="説明文" value="{{$category->description}}"/>
-            @endif<br>
+                <input type="text" name="category[description]" placeholder="説明文" value="{{ $errors->any() ? old('category.description'):$category->description}}"/>
+            <br>
             {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('category.description'))
             <div class="validerror">
@@ -68,7 +54,6 @@
                 <li>{{$message}}</li>
                 @endforeach</div>
             @endif
-
             
         <input type="submit" value="ジャンル情報変更"/>
         </form>

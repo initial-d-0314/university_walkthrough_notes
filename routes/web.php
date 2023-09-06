@@ -64,8 +64,8 @@ Route::controller(PostCommentController::class)->middleware(['auth'])->group(fun
     Route::put('/post/comment/{post}/{postcomment}','commentupdate');
     Route::post('/post/comment/','commentstore');
     //検索機能
+    Route::get('/search/before','search_before')->name('search_before');
     Route::get('/search','search')->name('search_index');
-    
 });
 
 Route::controller(UserAdditionalController::class)->middleware(['auth'])->group(function(){
