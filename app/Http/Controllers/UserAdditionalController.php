@@ -42,7 +42,15 @@ class UserAdditionalController extends Controller
         $user = User::where("id",$user_id)->first();
         
         return view('user_additional.posts')->with([
-            'posts'=> $post->getPaginateByLimitwithUser(),
+            'posts'=> $post->getPaginateByLimitwithUser($user_id,5),
+            'user' => $user,
+        ]);
+    }
+    
+    public function index_other(User $user,Post $post)
+    {
+        return view('user_additional.posts_other')->with([
+            'posts'=> $post->getPaginateByLimitwithUser($user->id,5),
             'user' => $user,
         ]);
     }

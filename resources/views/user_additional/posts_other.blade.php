@@ -9,16 +9,24 @@
 </head>
 
 <body>
-    <h1>投稿一覧</h1>
-    <p>ジャンル、カテゴリ、大学は検索画面へのリンクになっています</p>
-    <p><a href = /post/create>新規投稿作成</a></p>
+    <h1>{{$user->name}}の投稿一覧</h1>
+    <div>
+        <!--画像予定地-->
+        <p>ユーザーid：{{$user->id}}</p>
+        <p>所属大学：{{$user->university_id ?$user->university->name : "（未登録）"}}</p>
+        <p>区分：{{$user->grade ? : "（未登録）"}}</p>
+        <p>分野：{{$user->section ? : "（未登録）"}}</p>
+        <p>自己紹介：{{$user->introduction ? : "（未登録）"}}</p>
+        <p>[<a href="/useradditional/edit">このユーザーの投稿を検索する</a>]</p>
+        <p>[<a href="/useradditional/edit">お気に入り一覧(まだ)</a>]</p>
+    </div>
     <div class='posts'>
         @foreach ($posts as $post)
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
                 <div class='post'>
                 <h1 class='title'>{{$post->title}}</h1>
-                <h2 class='user'>投稿ユーザー：<a href="/useradditional/id/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
-                <h2 class='university'>大学：<a href="{{route('search_index', ['univid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
+                <h2 class='user'>投稿ユーザー：{{ $post->user->name }}</a></h2>
+                <h2 class='university'>大学：<a href="{{route('search_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
                 <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
                 <a href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
                 @if($post->use_time == "use")
