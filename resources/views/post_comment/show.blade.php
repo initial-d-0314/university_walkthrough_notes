@@ -13,7 +13,7 @@
         <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
             <div class='post'>
                 <h1 class='title'>{{$post->title}}</h1>
-                <h2 class='user'>投稿ユーザー：<a href="users/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
+                <h2 class='user'>投稿ユーザー：<a href="/useradditional/id/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
                 <h2 class='university'>大学：<a href="{{route('search_index', ['univid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
                 <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
                 <a href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
@@ -78,8 +78,7 @@
             @foreach($post->postcomments as $comment)
             <div style='border:solid 1px; margin-bottom: 10px;'>
                 <h2 class='commenttitle'>{{$comment->title}}</h1>
-                <h3 class='commentuser'>投稿ユーザー：<a href="users/{{ $post->user->id}}">{{ $comment->user->name }}</a></h2>
-                {{--{{route('index_user',['user'=>$comment->user_id])}}"とかにいずれ差し替える--}}
+                <h3 class='commentuser'>投稿ユーザー：<a href="/useradditional/id/{{ $post->user->id}}">{{ $comment->user->name }}</a></h2>
                 <p>{{$comment->body}}</p>
                 @if($comment->user_id==auth()->id())
                 <h4 class="edit">[<a href="/post/comment/{{$post->id}}/{{ $comment->id }}/edit">編集</a>]</h3>

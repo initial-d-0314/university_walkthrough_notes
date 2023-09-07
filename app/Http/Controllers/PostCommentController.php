@@ -184,7 +184,7 @@ class PostCommentController extends Controller
         /* キーワードから検索処理 */
         //この近辺は「存在するならそれ以外を落とす」処理になっている
         if(!empty($keyword)) {
-        $posts->where(function($query){
+        $posts->where(function($query) use($keyword){
             $query->where('title', 'LIKE', "%{$keyword}%")->orwhere('body', 'LIKE', "%{$keyword}%");
         })->get();
         }

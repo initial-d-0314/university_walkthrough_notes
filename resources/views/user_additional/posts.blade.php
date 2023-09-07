@@ -12,7 +12,7 @@
     <h1>自分の投稿一覧</h1>
     <div>
         <!--画像予定地-->
-        
+        <p>ユーザーid：{{$user->id}}</p>
         <p>所属大学：{{$user->university_id ?$user->university->name : "（未登録）"}}</p>
         <p>区分：{{$user->grade ? : "（未登録）"}}</p>
         <p>分野：{{$user->section ? : "（未登録）"}}</p>
@@ -25,7 +25,7 @@
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
                 <div class='post'>
                 <h1 class='title'>{{$post->title}}</h1>
-                <h2 class='user'>投稿ユーザー：<a href="users/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
+                <h2 class='user'>投稿ユーザー：{{ $post->user->name }}</a></h2>
                 <h2 class='university'>大学：<a href="{{route('search_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
                 <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
                 <a href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>

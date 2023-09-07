@@ -17,7 +17,8 @@
             @method('PUT')
             
             <h2>大学選択</h2>
-            <p>必須です。投稿がどの大学に関連しているかについてです。</p>
+            <p>あなたがどの大学に所属しているかについてです。</p
+            <p>大学に所属していない場合、あるいは卒業している場合は未設定でも構いません。</p>
             <p>この一覧は大学一覧ページと同じ順番で並んでいます。</p>
             <select name="additional[university_id]">
                 <option value="">未設定</option>
@@ -35,6 +36,7 @@
                 
                 
             <h2>区分選択</h2>
+            <p>あなたがどの区分に所属しているかです。</p>
             <fieldset>
             <div>
                 <input type="radio" id="kubun0" name="additional[grade]" value=""{{($user->grade == "" ||  old('additional.grade') == "") ? 'checked' : '' }}/>
@@ -53,7 +55,8 @@
             </fieldset>
             
             <h2>分野</h2>
-            <p>所属する分野です。</p>
+            <p>所属している分野です。</p>
+            <p>卒業している場合などは以前の所属を記入してください。</p>
             <input type="text" name="additional[section]" placeholder="タイトル" value="{{ $errors->any() ? old('additional.section'): $user->section}}"/>
             <br>
             <!--エラーがある場合リストで全部見せる-->
