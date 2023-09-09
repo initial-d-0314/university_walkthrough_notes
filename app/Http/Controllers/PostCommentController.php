@@ -62,7 +62,13 @@ class PostCommentController extends Controller
         if(!empty($input['use_time'])){
         $start_time = $input['stdate'] .' '. $input['sttime']. ":00"; //文字列結合をする
         $end_time = $input['endate'] .' '. $input['entime']. ":00"; 
-        $input+= ['start_time' => $start_time,'end_time' => $end_time,];
+        $input += ['start_time' => $start_time,'end_time' => $end_time,];
+        }
+        
+        //画像投稿
+        if($request->file('image')){
+        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        $input += ['image_url' => $image_url];
         }
         
         $post->fill($input)->save();
@@ -78,6 +84,18 @@ class PostCommentController extends Controller
         $end_time = $input_post['endate'] .' '. $input_post['entime']. ":00"; 
         $input_post+= ['start_time' => $start_time,'end_time' => $end_time,];
         }
+        
+        //削除のチェックがオンである場合はアップロードもしない
+        if(!empty($input_post['delete_image'])){
+            $input_post += ['image_url' => ""];
+        }else{
+            //画像投稿（上書き）
+            if($request->file('image')){
+            $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $input_post += ['image_url' => $image_url];
+            }
+        }
+        
         
         $post->fill($input_post)->save();
         //今回は事前に$Postの中身が存在するのでその中身の変更だけにとどまる

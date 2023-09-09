@@ -88,7 +88,11 @@
                 @endif
                         <hr>
                         <p class='body'>{{ $post->body }}</p>
-                        {{-- 画像機能は後で対応する --}}
+                        @if($post->image_url)
+                        <div class="image">
+                            <img src="{{ $post->image_url }}" alt="画像が読み込めません。"/>
+                        </div>
+                        @endif
                         <hr />
                         <h3 class='category'>
                             投稿時刻：{{ $post->created_at }}

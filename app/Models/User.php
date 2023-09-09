@@ -24,7 +24,7 @@ class User extends Authenticatable
         'section',
         'grade',
         'introduction',
-        'image_address',
+        'image_url',
         'user_id',
         'university_id', 
     ];

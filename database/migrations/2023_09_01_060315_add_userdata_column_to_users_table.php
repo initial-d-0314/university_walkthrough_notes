@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('section', 100)->nullable();
             $table->string('grade',30)->nullable();
             $table->string('introduction', 2000)->nullable();
-            $table->string('image_address', 300)->nullable();
+            $table->string('image_url', 300)->nullable();
             $table->foreignId('university_id')->nullable()->constrained();
             //外部キーもnullableにできるので利用する
         });

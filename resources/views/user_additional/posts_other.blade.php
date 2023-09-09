@@ -11,7 +11,11 @@
 <body>
     <h1>{{$user->name}}の投稿一覧</h1>
     <div>
-        <!--画像予定地-->
+        @if($user->image_url)
+            <div class="image">
+                <img src="{{ $user->image_url }}" alt="画像が読み込めません。"/>
+            </div>
+        @endif
         <p>ユーザーid：{{$user->id}}</p>
         <p>所属大学：{{$user->university_id ?$user->university->name : "（未登録）"}}</p>
         <p>区分：{{$user->grade ? : "（未登録）"}}</p>
@@ -37,7 +41,11 @@
                 @endif
                         <hr>
                         <p class='body'>{{ $post->body }}</p>
-                        {{-- 画像機能は後で対応する --}}
+                        @if($post->image_url)
+                        <div class="image">
+                            <img src="{{ $post->image_url }}" alt="画像が読み込めません。"/>
+                        </div>
+                        @endif
                         <hr />
                         <h3 class='category'>
                             投稿時刻：{{ $post->created_at }}

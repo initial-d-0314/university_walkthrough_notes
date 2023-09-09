@@ -19,7 +19,7 @@ class Post extends Model
         'genre_id',
         'category_id',
         'university_id',
-        'image_addless',
+        'image_url',
         'use_time',
         'sttime',
         'stdate',
