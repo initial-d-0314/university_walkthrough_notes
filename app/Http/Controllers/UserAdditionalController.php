@@ -31,9 +31,20 @@ class UserAdditionalController extends Controller
         $user = User::where("id",$user_id )->first();
         
         $input_useradditional = $request['additional'];
+        
+        //削除のチェックがオンである場合はアップロードもしない
+        if(!empty($input_useradditional['delete_image'])){
+            $input_useradditional += ['image_url' => ""];
+        }else{
+            //画像投稿（上書き）
+            if($request->file('image')){
+            $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $input_useradditional += ['image_url' => $image_url];
+            }
+        }
         $user->fill($input_useradditional)->save();
         //updateでなくsaveを利用すれば変更がない場合にDBにアクセスしないという利点がある
-        return redirect('/useradditional');
+        return redirect('/useradditional/my');
     }
     
     public function index(Post $post)

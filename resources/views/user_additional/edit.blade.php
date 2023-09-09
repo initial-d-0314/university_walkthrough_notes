@@ -12,7 +12,7 @@
 
     <body>
         <h1>ユーザー追加情報編集</h1>
-        <form action="/useradditional/" method="post">
+        <form action="/useradditional/" method="post" enctype="multipart/form-data">
             @CSRF
             @method('PUT')
             
@@ -76,8 +76,19 @@
                 @endforeach</div>
             @endif
                 
-            <h2>画像（未実装）</h2>
-            <p>削除ボタンとかになると思うよ</p>
+            <h2>画像</h2>
+            <div class="image">
+            <p>画像を追加できます。すでにある画像は上書きします。</p>
+            <input type="file" name="image">
+            </div>
+            
+            <h2>画像削除削除</h2>
+            <div class="delete_image">
+            <p>画像を削除できます。画像の変更と同時に使用した場合、変更した画像も含めて削除されます。</p>
+            <input type="checkbox" id="del_img" name="additional[delete_image]" value="use" {{($errors->any() && old('additional.delete_image') == "use") ? 'checked' : '' }}/>
+            <label for="del_img">画像を削除する</label>
+            </div>
+
             <input type="submit" value="編集を確定する" />
         </form>
         <div class="footer">

@@ -12,7 +12,7 @@
 
     <body>
         <h1>新規投稿追加</h1>
-        <form action="/post" method="post">
+        <form action="/post" method="post" enctype="multipart/form-data">
         @csrf
             <h2>タイトル</h2>
             <p>必須です。投稿のタイトルです。</p>
@@ -127,8 +127,10 @@
             @endif
 
             <h2>画像</h2>
+            <div class="image">
             <p>画像を追加できます。</p>
             <input type="file" name="image">
+            </div>
 
             <input type="submit" value="投稿する" />
         </form>

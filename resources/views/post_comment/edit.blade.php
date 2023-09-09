@@ -15,7 +15,7 @@
     この投稿の投稿者ではないので編集できません。
     @else
         <h1>投稿編集</h1>
-        <form action="/post/{{$post->id}}" method="post">
+        <form action="/post/{{$post->id}}" method="post" enctype="multipart/form-data">
             @CSRF
             @method('PUT')
             <h2>タイトル</h2>
@@ -121,8 +121,17 @@
             @endforeach</div>
             @endif
 
-
-            <h2>画像（どうしよう）</h2>
+            <h2>画像変更</h2>
+            <div class="image">
+            <p>画像を上書き、追加する形で変更できます。</p>
+            <input type="file" name="image">
+            </div>
+            <h2>画像削除削除</h2>
+            <div class="delete_image">
+            <p>画像を削除できます。画像の変更と同時に使用した場合、変更した画像も含めて削除されます。</p>
+            <input type="checkbox" id="del_img" name="post[delete_image]" value="use" {{($errors->any() && old('post.delete_image') == "use") ? 'checked' : '' }}/>
+            <label for="del_img">画像を削除する</label>
+            </div>
 
             <input type="submit" value="編集する" />
         </form>
