@@ -36,7 +36,17 @@
                     編集時刻：{{ $post->updated_at }}
                 </h3>
                 @auth
-                <!-- 助かった機能は後で対応する-->
+                @if (!$post->isHelpedBy(Auth::user()))
+                    <span class="helps">
+                        <i class="help-toggle" data-post-id="{{ $post->id }}">たすかった</i>
+                    <span class="help-counter">{{$post->helps_count}}</span>
+                    </span><!-- /.likes -->
+                @else
+                    <span class="helps">
+                        <i class="help-toggle helped" data-post-id="{{ $post->id }}">たすかった</i>
+                    <span class="help-counter">{{$post->helps_count}}</span>
+                    </span><!-- /.likes -->
+                @endif
                 <!-- お気に入り機能は後で対応する-->
                 @endauth
                 @if($post->user_id==auth()->id())
@@ -44,7 +54,14 @@
                 @endif
             </div>
         </div>
-        <!--検索から来てるのかホーム画面から来てるのか判別できないので、戻るボタンで戻らせることとする　許してくれ-->
+        @php
+            $ref = request()->server->get('HTTP_REFERER');
+            $hos = request()->server->get('HTTP_HOST');
+        @endphp
+        {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示--}}
+        @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
+        <a href={{$ref}}>一覧へ戻る</a>
+        @endif
         {{--コメント投稿欄--}}
 
         <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
@@ -74,8 +91,10 @@
                     <input type="submit" value="投稿" />
                 </form>
             </div>
-
         </div>
+        @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
+        <a href={{$ref}}>一覧へ戻る</a>
+        @endif
         {{--コメント一覧--}}
         
         <div class="comments">
@@ -90,7 +109,9 @@
             </div>
             @endforeach
         </div>
-
+        @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
+        <a href={{$ref}}>一覧へ戻る</a>
+        @endif
 </body>
 </x-app-layout>
 </html>

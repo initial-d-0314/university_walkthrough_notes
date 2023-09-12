@@ -73,8 +73,8 @@
                 <form action="/post/comment/{{$post->id}}/{{$comment->id}}/delete" method="POST">
                 @csrf
                 @method('PUT')
-                <input type="checkbox" id="del" name="comment[deletecheck]"/>
-                    <label for="del">この投稿を削除する</label>
+                <input type="checkbox" id="del" value = 'on' name="comment[deletecheck]"/>
+                    <label for="del">このコメントを削除する</label>
                     <input type="submit" value="削除" />
                 </form>
                 </div>

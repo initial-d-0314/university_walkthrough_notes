@@ -32,12 +32,12 @@ class Post extends Model
     //要素が多すぎるけどeagerロードする
     function getPaginateByLimit(int $limit_count = 5)
     {
-    return $this::with(['genre','category','university','user'])->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    return $this::with(['genre','category','university','user'])->withCount('helps')->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
     //ユーザーを限定して行う
     function getPaginateByLimitwithUser(int $user_id,int $limit_count = 5)
     {
-    return $this::with(['user'])->where('user_id',$user_id)->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    return $this::with(['user'])->withCount('helps')->where('user_id',$user_id)->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
     
     // Userに対するリレーション（1対多）
@@ -69,5 +69,17 @@ class Post extends Model
         return $this->hasMany(PostComment::class);  
     }
     
+    //いいね機能の手引き
+    // 実装1
+    public function helps()
+    {
+        return $this->hasMany('App\Models\Help');
+    }
+    
+    // 実装2
+    // Viewで使う、いいねされているかを判定するメソッド。
+    public function isHelpedBy($user): bool {
+        return Help::where('user_id', $user->id)->where('post_id', $this->id)->first() !==null;
+    }
     
 }

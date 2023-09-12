@@ -50,8 +50,6 @@
                 @foreach($genres as $genre)
                 <optgroup label="{{$genre->name}}:{{$genre->description}}">
                     @foreach($categories as $category)
-                    {{--カテゴリのidとジャンルの所属しているカテゴリのidで判定を行う--}}
-                    {{--ジャンルを一つづつ参照する方が安全性高い気がするけれど、カテゴリの編集は考えていないのでこの書き方で--}}
                     @continue($genre->id != $category->genre_id)
                     <option value="{{ $category->id }}" {{($post->category_id == $category->id || old('post.category_id') == $category->id) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
@@ -87,7 +85,8 @@
             <h2>開始時刻、終了時刻</h2>
             <p>イベントやキャンペーンの日時を記載できます。使用する場合は開始時刻と終了時刻の両方の入力が必要です。</p>
             <p>正確な値がわからない場合には適当な値でも構いません。</p>
-            <input type="checkbox" name="post[use_time]" value="use" {{($post->use_time == "use" || ($errors->any() && old('post.use_time') == "use")) ? 'checked' : '' }}/>
+            <input type="checkbox" name="post[use_time]" id="use_time" value="use" {{($post->use_time == "use" || ($errors->any() && old('post.use_time') == "use")) ? 'checked' : '' }}/>
+            <label for="use_time">時刻を設定する</label>
             <p>開始日時</p>
             <input type="date" name="post[stdate]" value="{{ $errors->any() ? old('post.stdate'): $post->stdate}}" />
             <input type="time" name="post[sttime]" value="{{ $errors->any() ? old('post.sttime'): substr($post->sttime, 0,-3)}}"/><br>
@@ -135,8 +134,24 @@
 
             <input type="submit" value="編集する" />
         </form>
+        <hr>
+                <div>
+                <form action="/post/{{$post->id}}/delete" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="checkbox" id="del" value = 'on' name="post[deletecheck]"/>
+                    <label for="del">この投稿を削除する</label>
+                    <input type="submit" value="削除" />
+                </form>
+                </div>
+        
+        
+        @php
+            $ref = request()->server->get('HTTP_REFERER');
+        @endphp
+        {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示--}}
         <div class="footer">
-            <a href="/">投稿せずトップページに戻る</a>
+            <a href={{$ref}}>編集せず戻る</a>
         </div>
     @endunless
     </body>

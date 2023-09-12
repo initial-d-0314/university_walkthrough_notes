@@ -23,6 +23,7 @@ class PostSeeder extends Seeder
             'genre_id'=>1,
             'category_id'=>3,
             'university_id'=>1,
+            'image_url' => "https://res.cloudinary.com/ddjohrjcp/image/upload/v1694495104/djhdtrc2d6nkuu7i0fwl.jpg",
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
         ]);

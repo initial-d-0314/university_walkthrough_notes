@@ -61,7 +61,7 @@
                 <label for="eventn">期間未設定</label>
             </fieldset>
             フリーワード：
-            <input type="text" name="keyword" placeholder="タイトル" value="{{ $errors->any() ? old('keword'): $datas["keyword"]}}"/>
+            <input type="text" name="keyword" placeholder="キーワード" value="{{ $errors->any() ? old('keword'): $datas["keyword"]}}"/>
             <br>
             <button type="submit">検索</button>
             <br>
@@ -99,14 +99,23 @@
                             編集時刻：{{ $post->updated_at }}
                         </h3>
                         @auth
-                            <!-- 助かった機能は後で対応する-->
+                            @if (!$post->isHelpedBy(Auth::user()))
+                                <span class="helps">
+                                    <i class="help-toggle" data-post-id="{{ $post->id }}">たすかった</i>
+                                <span class="help-counter">{{$post->helps_count}}</span>
+                                </span><!-- /.likes -->
+                            @else
+                                <span class="helps">
+                                    <i class="help-toggle helped" data-post-id="{{ $post->id }}">たすかった</i>
+                                <span class="help-counter">{{$post->helps_count}}</span>
+                                </span><!-- /.likes -->
+                            @endif
                             <!-- お気に入り機能は後で対応する-->
                         @endauth
                         <h3 class='post-info'><a href="post/{{ $post->id }}">コメント、投稿詳細</a></h3>
                         @if($post->user_id==auth()->id())
                         <h3 class="edit">[<a href="/post/{{ $post->id }}/edit">編集</a>]</h3>
                         @endif
-
                 </div>
             </div>
         @endforeach
