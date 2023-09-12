@@ -8,6 +8,7 @@ use App\Http\Requests\PostCommentRequest;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Help;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\Category;
@@ -29,10 +30,16 @@ class PostCommentController extends Controller
 
     public function create(Post $post,Genre $genre,Category $category,University $university)
     {
+        //ユーザーの情報見る
+        $user_id = \Auth::user()->id;
+        $user = User::where("id",$user_id)->first();
+        //ユーザー所属のidを見る
+        $univ = $user->university_id;
         return view('post_comment.create')->with([
         'universities'=>$university->get(),
         'genres'=>$genre->get(),
         'categories' => $category->get(),
+        'univ' =>$univ,
         ]);
     }
     public function edit(Post $post,Genre $genre,Category $category,University $university)
@@ -106,7 +113,7 @@ class PostCommentController extends Controller
     //投稿詳細ページから使う想定で
     public function delete(Request $request,Post $post){
         $input = $request['post'];
-        if($input->deletecheck){
+        if($input["deletecheck"] == 'on'){
         $post->delete();
         return redirect('/post');
         }
@@ -237,7 +244,7 @@ class PostCommentController extends Controller
 
         /* ペジネーション */
         // 5レコードずつ表示する(変更可能にしておきたいけどひとまず)
-        $posts = $posts->paginate(5)->withQueryString();
+        $posts = $posts->withcount('helps')->paginate(5)->withQueryString();
         return view('search.posts', ['univid' => $univid])->with([
             'posts' => $posts,
             'universities'=>$university->get(),
@@ -263,5 +270,29 @@ class PostCommentController extends Controller
         'eventn' => $request->input('eventn'),
         'keyword' => $request->input('keyword')
         ]);
+    }
+    
+    //助かった機能の実現に向けて
+    public function help(Request $request){
+    $user_id = Auth::user()->id;
+    $post_id = $request->post_id; // 投稿のidを取得
+    // すでにいいねがされているか判定するためにhelpsテーブルから1件取得
+    $already_helped = Help::where('user_id', $user_id)->where('post_id', $post_id)->first(); 
+    if (!$already_helped) {
+        //なかった場合
+        $help = new Help; // Helpクラスのインスタンスを作成
+        $help->post_id = $post_id;
+        $help->user_id = $user_id;
+        $help->save();
+    } else {
+        //あった場合はdeleteする（ソフトデリートの設定があるのでforcedeleteする）
+        Help::where('post_id', $post_id)->where('user_id', $user_id)->forceDelete();
+    }
+    // 投稿のいいね数を取得
+    $post_helps_count = Post::withCount('helps')->findOrFail($post_id)->helps_count;
+    $param = [
+        'post_helps_count' => $post_helps_count,
+    ];
+    return response()->json($param); // JSONデータをjQueryに返す
     }
 }

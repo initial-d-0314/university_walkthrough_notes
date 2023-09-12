@@ -54,6 +54,7 @@ Route::controller(GenreCategoryController::class)->middleware(['auth'])->group(f
 Route::controller(PostCommentController::class)->middleware(['auth'])->group(function(){
     Route::get('/post/create','create');
     Route::get('/post/{post}/edit','edit');
+    Route::put('/post/{post}/delete','delete');
     Route::get('/post/{post}','show');
     Route::put('/post/{post}','update');
     Route::get('/post','index')->name('postcomment_index');
@@ -66,6 +67,8 @@ Route::controller(PostCommentController::class)->middleware(['auth'])->group(fun
     //検索機能
     Route::get('/search/before','search_before')->name('search_before');
     Route::get('/search','search')->name('search_index');
+    //
+    Route::post('/post/help/add','help')->name('posts.help');
 });
 
 Route::controller(UserAdditionalController::class)->middleware(['auth'])->group(function(){

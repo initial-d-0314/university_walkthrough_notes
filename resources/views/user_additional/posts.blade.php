@@ -52,7 +52,17 @@
                             編集時刻：{{ $post->updated_at }}
                         </h3>
                         @auth
-                            <!-- 助かった機能は後で対応する-->
+                            @if (!$post->isHelpedBy(Auth::user()))
+                                <span class="helps">
+                                    <i class="help-toggle" data-post-id="{{ $post->id }}">たすかった</i>
+                                <span class="help-counter">{{$post->helps_count}}</span>
+                                </span><!-- /.likes -->
+                            @else
+                                <span class="helps">
+                                    <i class="help-toggle helped" data-post-id="{{ $post->id }}">たすかった</i>
+                                <span class="help-counter">{{$post->helps_count}}</span>
+                                </span><!-- /.likes -->
+                            @endif
                             <!-- お気に入り機能は後で対応する-->
                         @endauth
                         <h3 class='post-info'><a href="post/{{ $post->id }}">コメント、投稿詳細</a></h3>

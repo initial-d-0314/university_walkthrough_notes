@@ -39,17 +39,17 @@
             <h2>ジャンル・カテゴリ選択</h2>
             <p>必須です。投稿がどのジャンル、カテゴリに含まれているのかについてです。</p>
             <p>この一覧はジャンル・カテゴリ一覧ページと同じ順番で並んでいます。</p>
+            {{--カテゴリのidとジャンルの所属しているカテゴリのidで判定を行う--}}
+            {{--ジャンルを一つづつ参照する方が安全性高い気がするけれど、カテゴリの編集は考えていないのでこの書き方で--}}
             <select name="post[category_id]">
                 <option value="">（ジャンルを選んでください）</option>
                 @foreach($genres as $genre)
                 <optgroup label="{{$genre->name}}:{{$genre->description}}">
                     @foreach($categories as $category)
-                    {{--カテゴリのidとジャンルの所属しているカテゴリのidで判定を行う--}}
-                    {{--ジャンルを一つづつ参照する方が安全性高い気がするけれど、カテゴリの編集は考えていないのでこの書き方で--}}
-                    @continue($genre->id != $category->genre_id)
-                        <option value="{{ $category->id }}" {{old('post.category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+@continue($genre->id != $category->genre_id)
+                    <option value="{{ $category->id }}" {{old('post.category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
-                    @endforeach
+                @endforeach
             </select>
             @if($errors->has('post.category_id'))
             <div class="validerror">
@@ -62,10 +62,17 @@
             <h2>大学選択</h2>
             <p>必須です。投稿がどの大学に関連しているかについてです。</p>
             <p>この一覧は大学一覧ページと同じ順番で並んでいます。</p>
+            {{--ユーザーの所属する大学idを初期値にしたいけど、oldがある場合はoldを優先する--}}
             <select name="post[university_id]">
+            @if(empty(old('post.university_id')))
                 @foreach($universities as $university)
-                <option value="{{ $university->id }}" {{old('post.university_id') == $university->id ? 'selected' : '' }}>{{ $university->name }}</option>
+                <option value="{{ $university->id }}" {{($univ == $university->id)? 'selected' : '' }}>{{ $university->name }}</option>
                 @endforeach
+            @else
+                @foreach($universities as $university)
+                <option value="{{ $university->id }}" {{(old('post.university_id') == $university->id)? 'selected' : '' }}>{{ $university->name }}</option>
+                @endforeach
+            @endif
             </select>
             @if($errors->has('post.university_id'))
             <div class="validerror">
@@ -74,14 +81,12 @@
             @endforeach</div>
             @endif
 
-
             <h1>オプション</h1>
-
             <h2>開始時刻、終了時刻</h2>
             <p>イベントやキャンペーンの日時を記載できます。使用する場合は開始時刻と終了時刻の両方の入力が必要です。</p>
             <p>正確な値がわからない場合には適当な値でも構いません。また、半永久的に続く場合はできれば使用せず、本文に記載をお願いします。</p>
-            <input type="checkbox" name="post[use_time]" value="use" {{($errors->any() && old('post.use_time') == "use") ? 'checked' : '' }}/>
-
+            <input type="checkbox" name="post[use_time]" id="use_time"value="use" {{($errors->any() && old('post.use_time') == "use") ? 'checked' : '' }}/>
+            <label for="use_time">時刻を設定する</label>
             <p>開始日時</p>
             <input type="date" name="post[stdate]" value="{{old('post.stdate')}}" />
             <input type="time" name="post[sttime]" value="{{old('post.sttime')}}"><br>
@@ -135,7 +140,7 @@
             <input type="submit" value="投稿する" />
         </form>
         <div class="footer">
-            <a href="/">投稿せずトップページに戻る</a>
+            <a href="/dashboard">投稿せずトップページに戻る</a>
         </div>
     </body>
 
