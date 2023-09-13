@@ -47,7 +47,15 @@
                     <span class="help-counter">{{$post->helps_count}}</span>
                     </span><!-- /.likes -->
                 @endif
-                <!-- お気に入り機能は後で対応する-->
+                @if (!$post->isFavoritedBy(Auth::user()))
+                    <span class="favorites">
+                        <i class="favorite-toggle" data-post-id="{{ $post->id }}">お気に入り登録</i>
+                    </span>
+                @else
+                    <span class="favorites">
+                        <i class="favorite-toggle favorited" data-post-id="{{ $post->id }}">お気に入り解除</i>
+                    </span>
+                @endif
                 @endauth
                 @if($post->user_id==auth()->id())
                         <h3 class="edit">[<a href="/post/{{ $post->id }}/edit">編集</a>]</h3>

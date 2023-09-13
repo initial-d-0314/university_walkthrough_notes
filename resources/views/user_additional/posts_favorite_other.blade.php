@@ -9,21 +9,7 @@
 </head>
 
 <body>
-    <h1>{{$user->name}}の投稿一覧</h1>
-    <div>
-        @if($user->image_url)
-            <div class="image">
-                <img src="{{ $user->image_url }}" alt="画像が読み込めません。"/>
-            </div>
-        @endif
-        <p>ユーザーid：{{$user->id}}</p>
-        <p>所属大学：{{$user->university_id ?$user->university->name : "（未登録）"}}</p>
-        <p>区分：{{$user->grade ? : "（未登録）"}}</p>
-        <p>分野：{{$user->section ? : "（未登録）"}}</p>
-        <p>自己紹介：{{$user->introduction ? : "（未登録）"}}</p>
-        <p>[<a href="/useradditional/edit">このユーザーの投稿を検索する</a>]</p>
-        <p>[<a href="/useradditional/id/{{$user->id}}/favorite">お気に入り一覧</a>]</p>
-    </div>
+    <h1>{{$user->name}}のお気に入り一覧</h1>
     <div class='posts'>
         @foreach ($posts as $post)
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
@@ -77,10 +63,17 @@
                         @if($post->user_id==auth()->id())
                         <h3 class="edit">[<a href="/post/{{ $post->id }}/edit">編集</a>]</h3>
                         @endif
-
                 </div>
             </div>
         @endforeach
+        @php
+            $ref = request()->server->get('HTTP_REFERER');
+            $hos = request()->server->get('HTTP_HOST');
+        @endphp
+        {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示--}}
+        @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
+        <a href={{$ref}}>戻る</a>
+        @endif
         <div>
             {{ $posts->onEachSide(5)->links() }}
             <!--class="paginationについてCSSでいじる必要あり-->

@@ -21,7 +21,7 @@
                         {{ __('投稿一覧') }}
                     </x-nav-link>
                     <x-nav-link :href="route('useradditional_index')" :active="request()->routeIs('useradditional_index')">
-                        {{ __('ユーザーマイページ（仮設）') }}
+                        {{ __('マイページ') }}
                     </x-nav-link>
                     <x-nav-link :href="route('search_index')" :active="request()->routeIs('search_index')">
                         {{ __('投稿検索') }}
