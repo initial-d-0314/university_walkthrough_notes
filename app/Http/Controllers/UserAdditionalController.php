@@ -57,11 +57,36 @@ class UserAdditionalController extends Controller
             'user' => $user,
         ]);
     }
-    
     public function index_other(User $user,Post $post)
     {
         return view('user_additional.posts_other')->with([
             'posts'=> $post->getPaginateByLimitwithUser($user->id,5),
+            'user' => $user,
+        ]);
+    }
+    
+    
+    //クエリビルダを使うことになる？
+    public function favorite(Post $post)
+    {
+        $user_id = \Auth::user()->id;
+        $user = User::where("id",$user_id)->first();
+        $posts = Post::query()->join('favorites', 'posts.id', '=', 'favorites.post_id')->join('users', 'favorites.user_id', '=','users.id' );
+        $posts->where('favorites.user_id',$user->id)->get();
+        $posts = $posts->withcount('helps')->paginate(5)->withQueryString();
+        return view('user_additional.posts_favorite')->with([
+            'posts'=> $posts,
+            'user' => $user,
+        ]);
+    }
+    
+    public function favorite_other(User $user,Post $post)
+    {
+        $posts = Post::query()->join('favorites', 'posts.id', '=', 'favorites.post_id')->join('users', 'favorites.user_id', '=','users.id' );
+        $posts->where('favorites.user_id',$user->id)->get();
+        $posts = $posts->withcount('helps')->paginate(5)->withQueryString();
+        return view('user_additional.posts_favorite_other')->with([
+            'posts'=> $posts,
             'user' => $user,
         ]);
     }

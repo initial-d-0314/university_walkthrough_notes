@@ -22,7 +22,7 @@
         <p>分野：{{$user->section ? : "（未登録）"}}</p>
         <p>自己紹介：{{$user->introduction ? : "（未登録）"}}</p>
         <p>[<a href="/useradditional/edit">編集</a>]</p>
-        <p>[<a href="/useradditional/edit">お気に入り一覧(まだ)</a>]</p>
+        <p>[<a href="/useradditional/my/favorite">お気に入り一覧</a>]</p>
     </div>
     <div class='posts'>
         @foreach ($posts as $post)
@@ -63,7 +63,15 @@
                                 <span class="help-counter">{{$post->helps_count}}</span>
                                 </span><!-- /.likes -->
                             @endif
-                            <!-- お気に入り機能は後で対応する-->
+                            @if (!$post->isFavoritedBy(Auth::user()))
+                                <span class="favorites">
+                                    <i class="favorite-toggle" data-post-id="{{ $post->id }}">お気に入り登録</i>
+                                </span>
+                            @else
+                                <span class="favorites">
+                                    <i class="favorite-toggle favorited" data-post-id="{{ $post->id }}">お気に入り解除</i>
+                                </span>
+                            @endif
                         @endauth
                         <h3 class='post-info'><a href="post/{{ $post->id }}">コメント、投稿詳細</a></h3>
                         @if($post->user_id==auth()->id())

@@ -9,6 +9,7 @@ use App\Http\Requests\PostCommentRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Help;
+use App\Models\Favorite;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\Category;
@@ -294,5 +295,23 @@ class PostCommentController extends Controller
         'post_helps_count' => $post_helps_count,
     ];
     return response()->json($param); // JSONデータをjQueryに返す
+    }
+    
+    //お気に入り機能に向けて
+    public function favorite(Request $request){
+    $user_id = Auth::user()->id;
+    $post_id = $request->post_id; // 投稿のidを取得
+    // すでにいいねがされているか判定するためにhelpsテーブルから1件取得
+    $already_favorited = Favorite::where('user_id', $user_id)->where('post_id', $post_id)->first(); 
+    if (!$already_favorited) {
+        //なかった場合
+        $favorite = new Favorite; // Helpクラスのインスタンスを作成
+        $favorite->post_id = $post_id;
+        $favorite->user_id = $user_id;
+        $favorite->save();
+    }else{
+        //あった場合はdeleteする（ソフトデリートの設定があるのでforcedeleteする）
+        Favorite::where('post_id', $post_id)->where('user_id', $user_id)->forceDelete();
+    }
     }
 }

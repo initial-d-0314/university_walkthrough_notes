@@ -39,7 +39,6 @@ class Post extends Model
     {
     return $this::with(['user'])->withCount('helps')->where('user_id',$user_id)->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
-    
     // Userに対するリレーション（1対多）
     public function user()
     {
@@ -63,7 +62,7 @@ class Post extends Model
         return $this->belongsTo(Category::class);  
     }
     
-    // Categoryに対するリレーション（1対多）
+    //PostCommentに対するリレーション（1対多）
     public function postcomments()   
     {
         return $this->hasMany(PostComment::class);  
@@ -73,13 +72,25 @@ class Post extends Model
     // 実装1
     public function helps()
     {
-        return $this->hasMany('App\Models\Help');
+        return $this->hasMany(Help::class);
     }
     
     // 実装2
     // Viewで使う、いいねされているかを判定するメソッド。
     public function isHelpedBy($user): bool {
         return Help::where('user_id', $user->id)->where('post_id', $this->id)->first() !==null;
+    }
+    
+    // 実装1
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    
+    // 実装2
+    // Viewで使う、いいねされているかを判定するメソッド。
+    public function isFavoritedBy($user): bool {
+        return Favorite::where('user_id', $user->id)->where('post_id', $this->id)->first() !==null;
     }
     
 }

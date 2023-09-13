@@ -67,8 +67,9 @@ Route::controller(PostCommentController::class)->middleware(['auth'])->group(fun
     //検索機能
     Route::get('/search/before','search_before')->name('search_before');
     Route::get('/search','search')->name('search_index');
-    //
+    //お気に入り、助かった機能
     Route::post('/post/help/add','help')->name('posts.help');
+    Route::post('/post/favorite/add','favorite')->name('posts.favorite');
 });
 
 Route::controller(UserAdditionalController::class)->middleware(['auth'])->group(function(){
@@ -77,6 +78,8 @@ Route::controller(UserAdditionalController::class)->middleware(['auth'])->group(
     Route::get('/useradditional/my','index')->name('useradditional_index');
     Route::put('/useradditional/','update');
     //(対象ユーザーのお気に入り投稿機能を探す)
+    Route::get('/useradditional/my/favorite','favorite');
+    Route::get('/useradditional/id/{user}/favorite','favorite_other');
 });
 
 
