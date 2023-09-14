@@ -6,6 +6,7 @@
     <title>大学攻略ガイド</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/css/input.css')  }}" />
 </head>
 
 <body>
@@ -62,14 +63,20 @@
             </fieldset>
             フリーワード：
             <input type="text" name="keyword" placeholder="キーワード" value="{{ $errors->any() ? old('keword'): $datas["keyword"]}}"/>
+            @if($errors->has('keyword'))
+            <div class="validerror">
+            @foreach($errors->get('keyword') as $message)
+            <li>{{$message}}</li>
+            @endforeach</div>
+            @endif
             <br>
             <button type="submit">検索</button>
             <br>
             <p>検索機能についての注意：
             ユーザーidは対象となるユーザーの個人ページに記載されています。
-            ジャンルとカテゴリは同時に指定できますが、カテゴリが所属しているジャンルと異なるジャンルを選択すると検索がうまくいかない場合があります。
-            開催期間にチェックを入れない場合は未設定も含めたすべての期間について検索を行います。
-            フリーワード検索は現在一つのキーワードのみの対応です。</p>
+            ジャンルとカテゴリは同時に指定できますが、カテゴリの所属ジャンルと異なるジャンルを同時に選択すると、検索がうまくいかない可能性があります。
+            開催期間にチェックを入れない場合は、未設定も含めたすべての期間について検索を行います。
+            フリーワード検索、およびユーザーidは現在一つのみの対応です。</p>
     </div>
     <div class='posts'>
         @foreach ($posts as $post)

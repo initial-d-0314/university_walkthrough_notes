@@ -7,7 +7,6 @@ use App\Http\Requests\UniversityRequest;
 use App\Models\University;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Cloudinary;  //dev4_画像アップロード
 
 class UniversityController extends Controller
 {
