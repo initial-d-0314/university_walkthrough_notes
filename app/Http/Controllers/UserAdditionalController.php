@@ -72,6 +72,7 @@ class UserAdditionalController extends Controller
         $user_id = \Auth::user()->id;
         $user = User::where("id",$user_id)->first();
         $posts = Post::query()->join('favorites', 'posts.id', '=', 'favorites.post_id')->join('users', 'favorites.user_id', '=','users.id' );
+        //joinで結合して疑似的にリレーションをたどる
         $posts->where('favorites.user_id',$user->id)->get();
         $posts = $posts->withcount('helps')->paginate(5)->withQueryString();
         return view('user_additional.posts_favorite')->with([

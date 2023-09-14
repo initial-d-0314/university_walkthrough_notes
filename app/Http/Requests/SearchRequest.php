@@ -14,11 +14,7 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            
             'userid' => 'sometimes|nullable|numeric',
-            'univid' => 'sometimes|nullable|numeric',
-            'genreid' => 'sometimes|nullable|numeric',
-            'categoryid' => 'sometimes|nullable|numeric',
             'keyword' => 'sometimes|nullable|string',
         ];
     }

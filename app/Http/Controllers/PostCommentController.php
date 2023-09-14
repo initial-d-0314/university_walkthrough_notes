@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\PostCommentRequest;
+use App\Http\Requests\SearchRequest;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -104,7 +105,6 @@ class PostCommentController extends Controller
             }
         }
         
-        
         $post->fill($input_post)->save();
         //今回は事前に$Postの中身が存在するのでその中身の変更だけにとどまる
         //updateでなくsaveを利用すれば変更がない場合にDBにアクセスしないという利点がある
@@ -114,9 +114,14 @@ class PostCommentController extends Controller
     //投稿詳細ページから使う想定で
     public function delete(Request $request,Post $post){
         $input = $request['post'];
-        if($input["deletecheck"] == 'on'){
-        $post->delete();
-        return redirect('/post');
+        $userid = Auth::user()->id;
+        if($post->user_id == $userid){
+            if($input["deletecheck"] == 'on'){
+            $post->delete();
+            return redirect('/post');
+            }
+        }else{
+            abort(403,"投稿者ではないので削除できません");
         }
     }
     //コメント投稿関連について
@@ -145,16 +150,20 @@ class PostCommentController extends Controller
     //コメントの編集ページから使う想定で
     public function commentdelete(Request $request,Post $post,PostComment $postcomment){
         $input = $request['comment'];
-        if($input["deletecheck"] == 'on'){
-        $postcomment->delete();
+        $userid = Auth::user()->id;
+        if($postcomment->user_id == $userid){
+            if($input["deletecheck"] == 'on'){
+            $postcomment->delete();
+            }
+            return redirect('/post/'.$post->id);
+        }else{
+            abort(403,"投稿者ではないので削除できません");
         }
-        return redirect('/post/'.$post->id);
     }
     
-    //検索機能に備えるとこ
-    public function search(Request $request,Genre $genre,Category $category,University $university){
+    //検索機能
+    public function search(SearchRequest $request,Genre $genre,Category $category,University $university){
         $posts = Post::query();
-        //dd($request);
         //各種情報
         $userid = $request->input('userid');
         $univid = $request->input('univid');
@@ -166,17 +175,16 @@ class PostCommentController extends Controller
         $eventd = $request->input('eventd');
         $eventa = $request->input('eventa');
         $eventn = $request->input('eventn');
-    
         $keyword = $request->input('keyword'); //キーワード
         
-        /* イベントの開催日時に関して検索処理 */
+        /* イベントの開催日時に関しての処理 */
         //現在時刻を文字列で取得
-        //タイムゾーンの設定をしないとUTCで渡されてしまう
+        //タイムゾーンの設定をしないとUTC（9時間前）で渡されてしまう
         date_default_timezone_set('Asia/Tokyo');
         $date = strtotime("now");
         $nowtime = date('Y-m-d H:i:s',$date);
-        if(!(empty($eventn)&&empty($eventb)&&empty($eventd)&&empty($eventa))){
         //全部無入力かどうかの判定、もし全部無入力なら絞り込みはしない
+        if(!(empty($eventn)&&empty($eventb)&&empty($eventd)&&empty($eventa))){
             if(empty($eventn)){
                 if(empty($eventb)) {
                     $posts->whereNot('start_time','>',$nowtime)->get();
@@ -202,13 +210,13 @@ class PostCommentController extends Controller
                     $posts->whereNot('end_time','<',$nowtime)->get();
                 }
                 //最後に時間未指定も含むようにする
-                //wherenullの影響範囲が広すぎるので先に処理をかける
+                //wherenullの影響範囲が広すぎる（ユーザーとかの絞り込みを飛び越える）ので先に処理をかける
                 $posts->orWhereNull('use_time');
             }
         }
         
         /* キーワードから検索処理 */
-        //この近辺は「存在するならそれ以外を落とす」処理になっている
+        //「存在するならそれ以外を落とす」処理になっている
         if(!empty($keyword)) {
         $posts->where(function($query) use($keyword){
             $query->where('title', 'LIKE', "%{$keyword}%")->orwhere('body', 'LIKE', "%{$keyword}%");
@@ -223,15 +231,16 @@ class PostCommentController extends Controller
                 $posts->where('university_id',$univid)->get();
         }
         /* ジャンルとカテゴリidから検索処理 */
-        //両方入ることを事前にバリデーションで弾いておく
+        //両方入ってもいいけど一件もヒットしなくなるよと書いておく
         if(!empty($genreid)) {
                 $posts->where('genre_id',$genreid)->get();
         }
         if(!empty($categoryid)) {
                 $posts->where('category_id',$categoryid)->get();
         }
+        
         /* 入力情報整理 */
-        //viewの入力欄などに反映させたいので汚いがこういう形で書いておく
+        //viewの入力欄などに反映させたいので、汚いがこういう形で書いておく
         $array=array(
         'userid' => $request->input('userid'),
         'univid' => $request->input('univid'),
@@ -256,7 +265,7 @@ class PostCommentController extends Controller
         //ページを開き直すとともに、$postsの情報をHTMLへ送る
     }
     
-    //クエリ文字列入れたいという要望に備えて：
+    //1ページ目にクエリ文字列入れたいという要望に備えて：
     //名前付きのルートにリダイレクトで渡せば自然とのこと
     //参考：https://stackoverflow.com/questions/54702550/how-to-add-query-string-to-laravel-view
     public function search_before(Request $request){

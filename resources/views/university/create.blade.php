@@ -9,8 +9,11 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('/css/input.css')  }}" />
     </head>
-
     <body>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
         <form action="/university" method="post">
             @csrf
             <h1>大学情報追加</h1>
@@ -69,11 +72,15 @@
                     <li>{{ $message }}</li>
                 @endforeach</div>
             @endif
-            <input type="submit" value="大学データ追加" />
-        </form>
-        <div class="footer">
-            <a href="/university">追加せず戻る</a>
+            <div class="">
+            <input type="submit" value="大学データ変更"/>
+            <a class="ml-4" href="/university">変更せず戻る</a>
         </div>
+        </form>
+            </div>
+        </div>
+    </div>
+</div>
     </body>
 </html>
 </x-app-layout>
