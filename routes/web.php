@@ -67,6 +67,9 @@ Route::controller(PostCommentController::class)->middleware(['auth'])->group(fun
     //検索機能
     Route::get('/search/before','search_before')->name('search_before');
     Route::get('/search','search')->name('search_index');
+    Route::get('/search/setting','index_setting');
+    Route::get('/search/setting/add','savesetting');
+    Route::get('/search/setting/{serachsetting}/delete','search');
     //お気に入り、助かった機能
     Route::post('/post/help/add','help')->name('posts.help');
     Route::post('/post/favorite/add','favorite')->name('posts.favorite');

@@ -75,5 +75,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(University::class);
     }
+    
+    // SearchSettingに対するリレーション（1対多）
+    public function searchsettings()
+    {
+        return $this->hasMany(SearchSetting::class);
+    }
 
 }
