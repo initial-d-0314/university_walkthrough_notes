@@ -26,5 +26,10 @@ class University extends Model
     {
         return $this->hasMany(User::class);
     }
+    // SearchSettingに対するリレーション（1対多）
+    public function searchsettings()
+    {
+        return $this->hasMany(SearchSetting::class);
+    }
 
 }

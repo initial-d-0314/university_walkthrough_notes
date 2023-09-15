@@ -17,6 +17,7 @@ use App\Models\Category;
 use App\Models\Genre;
 use App\Models\University;
 use App\Models\User;
+use App\Models\SearchSetting;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -323,4 +324,46 @@ class PostCommentController extends Controller
         Favorite::where('post_id', $post_id)->where('user_id', $user_id)->forceDelete();
     }
     }
+    
+    
+    //検索設定の保存と呼び出しについて
+    //設定一覧へのルート
+    public function index_setting(SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
+    {
+        $userid = Auth::user()->id;
+        return view('search.settings')->with([
+            'settings'=>$searchsetting->getPaginateByLimitwithUser($userid,10),
+            'universities'=>$university->get(),
+            'genres'=>$genre->get(),
+            'categories' => $category->get(),
+            ]);
+    }
+    //todo:検索設定を保存するルート
+    public function savesetting(Request $request,SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
+    {
+        $makeuserid = Auth::user()->id;
+        $userid = $request->input('userid');
+        $univid = $request->input('univid');
+        $genreid = $request->input('genreid');
+        $categoryid = $request->input('categoryid');
+        
+        $input = $request->input();
+        $input += ['make_user_id' => $makeuserid,
+        'user_id' => $userid,
+        'university_id' => $univid,
+        'genre_id' => $genreid,
+        'category_id' => $categoryid,];
+        //
+        $searchsetting->fill($input)->save();
+        //今回は事前に$Postの中身が存在するのでその中身の変更だけにとどまる
+        //updateでなくsaveを利用すれば変更がない場合にDBにアクセスしないという利点がある
+        return redirect('/search/setting');
+    }
+
+    //設定の削除のルート
+    public function settingdelete(SearchSetting $searchsetting){
+        $searchsetting->delete();
+        return redirect('/search/setting');
+    }
+    
 }

@@ -71,6 +71,8 @@
             @endif
             <br>
             <button type="submit">検索</button>
+            <button type="submit" formaction="/search/setting/add">この設定を保存</button>
+            <!--お行儀が悪いけどこうするしか…-->
             <br>
             <p>検索機能についての注意：
             ユーザーidは対象となるユーザーの個人ページに記載されています。

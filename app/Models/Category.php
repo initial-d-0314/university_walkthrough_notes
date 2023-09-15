@@ -29,5 +29,11 @@ class Category extends Model
     {
         return $this->belongsTo(Genre::class);  
     }
+    
+    // SearchSettingに対するリレーション（1対多）
+    public function searchsettings()
+    {
+        return $this->hasMany(SearchSetting::class);
+    }
 
 }
