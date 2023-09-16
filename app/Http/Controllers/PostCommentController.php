@@ -163,7 +163,7 @@ class PostCommentController extends Controller
     }
     
     //検索機能
-    public function search(SearchRequest $request,Genre $genre,Category $category,University $university){
+    public function search(Request $request,Genre $genre,Category $category,University $university){
         $posts = Post::query();
         //各種情報
         $userid = $request->input('userid');
@@ -269,7 +269,7 @@ class PostCommentController extends Controller
     //1ページ目にクエリ文字列入れたいという要望に備えて：
     //名前付きのルートにリダイレクトで渡せば自然とのこと
     //参考：https://stackoverflow.com/questions/54702550/how-to-add-query-string-to-laravel-view
-    public function search_before(Request $request){
+    public function search_before(SearchRequest $request){
         return redirect()->route('search_index', [
         'userid' => $request->input('userid'),
         'univid' => $request->input('univid'),
@@ -339,7 +339,7 @@ class PostCommentController extends Controller
             ]);
     }
     //todo:検索設定を保存するルート
-    public function savesetting(Request $request,SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
+    public function savesetting(SearchRequest $request,SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
     {
         $makeuserid = Auth::user()->id;
         $userid = $request->input('userid');

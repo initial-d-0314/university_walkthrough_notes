@@ -17,6 +17,12 @@
         @method('GET')
         ユーザーid：
         <input type="text" name="userid" placeholder="id" value="{{ $errors->any() ? old('userid'): $datas["userid"]}}"/>
+        @if($errors->has('userid'))
+            <div class="validerror">
+            @foreach($errors->get('userid') as $message)
+            <li>{{$message}}</li>
+            @endforeach</div>
+        @endif
         <br>
         大学：
         <select name="univid">
@@ -25,12 +31,6 @@
                 <option value="{{ $university->id }}" {{($datas["univid"] == $university->id||old('univid') == $university->id) ? 'selected' : '' }}>{{ $university->name }}</option>
                 @endforeach
         </select>
-            @if($errors->has('univid'))
-            <div class="validerror">
-            @foreach($errors->get('univid') as $message)
-            <li>{{$message}}</li>
-            @endforeach</div>
-            @endif
             
             ジャンル：<select name="genreid">
                 <option value="">（ジャンル未選択）</option>

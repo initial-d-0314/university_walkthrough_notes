@@ -20,4 +20,14 @@ class UserAdditionalRequest extends FormRequest
             'additional.introduction' => 'sometimes|nullable|string|max:2000'
         ];
     }
+    
+    public function attributes()
+    {
+        return [
+            'additional.university_id' => '所属大学',
+            'additional.grade' => '区分',
+            'additional.section' => '所属',
+            'additional.introduction' => '自己紹介'
+        ];
+    }
 }

@@ -19,4 +19,13 @@ class GenreCategoryRequest extends FormRequest
             'category.description' => 'required|string|max:100',
         ];
     }
+    
+        public function attributes()
+    {
+        return [
+            'category.genre_id' => '所属カテゴリ',
+            'category.name' => '名前',
+            'category.description' => '説明文',
+        ];
+    }
 }

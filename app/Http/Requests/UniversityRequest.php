@@ -21,4 +21,14 @@ class UniversityRequest extends FormRequest
             'university.nearest_station' => 'sometimes|nullable|string|max:100',
         ];
     }
+    public function attributes()
+    {
+        return [
+            'university.name' => '大学名',
+            'university.section' => '区分',
+            'university.address' => '住所',
+            'university.url' => 'URL',
+            'university.nearest_station' => '最寄り駅',
+        ];
+    }
 }
