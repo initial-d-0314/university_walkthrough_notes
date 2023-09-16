@@ -57,4 +57,22 @@ class PostRequest extends FormRequest
     $this->post += ['start_time' => $start_time,'end_time' => $end_time,];
         }
     }
+    
+        public function attributes()
+    {
+        return [
+            'post.title' => 'タイトル',
+            'post.body' => '本文',
+            'post.category_id' => 'カテゴリ',
+            'post.university_id' => '大学',
+            'post.stdate' => '開始日',
+            'post.endate' => '終了日',
+            'post.sttime' => '開始時刻',
+            'post.entime' => '終了時刻',
+            'post.start_time' => '開始日時',
+            'post.end_time'=> '終了日時',
+            
+            
+        ];
+    }
 }

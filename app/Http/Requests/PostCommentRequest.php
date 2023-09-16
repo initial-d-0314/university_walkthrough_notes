@@ -19,4 +19,12 @@ class PostCommentRequest extends FormRequest
             'comment.body' => 'required|string|max:1000',
         ];
     }
+    
+        public function attributes()
+    {
+        return [
+            'comment.title' => 'タイトル',
+            'comment.body' => 'コメント本文',
+        ];
+    }
 }

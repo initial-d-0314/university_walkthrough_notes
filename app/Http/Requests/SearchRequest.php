@@ -18,4 +18,11 @@ class SearchRequest extends FormRequest
             'keyword' => 'sometimes|nullable|string',
         ];
     }
+        public function attributes()
+    {
+        return [
+            'userid' => 'ユーザーid',
+            'keyword' => 'キーワード',
+        ];
+    }
 }
