@@ -39,8 +39,7 @@
             <h2>ジャンル・カテゴリ選択</h2>
             <p>必須です。投稿がどのジャンル、カテゴリに含まれているのかについてです。</p>
             <p>この一覧はジャンル・カテゴリ一覧ページと同じ順番で並んでいます。</p>
-            {{--カテゴリのidとジャンルの所属しているカテゴリのidで判定を行う--}}
-            {{--ジャンルを一つづつ参照する方が安全性高い気がするけれど、カテゴリの編集は考えていないのでこの書き方で--}}
+{{--カテゴリのidとジャンルの所属しているカテゴリのidで判定を行う、カテゴリの編集は考えていないのでこの書き方で--}}
             <select name="post[category_id]">
                 <option value="">（ジャンルを選んでください）</option>
                 @foreach($genres as $genre)
@@ -61,8 +60,7 @@
 
             <h2>大学選択</h2>
             <p>必須です。投稿がどの大学に関連しているかについてです。</p>
-            <p>この一覧は大学一覧ページと同じ順番で並んでいます。</p>
-            {{--ユーザーの所属する大学idを初期値にしたいけど、oldがある場合はoldを優先する--}}
+            <p>この一覧は大学一覧ページと同じ順番で並んでいます。</p>{{--ユーザーの所属する大学idを初期値に、oldがある場合はoldを優先する--}}
             <select name="post[university_id]">
             @if(empty(old('post.university_id')))
                 @foreach($universities as $university)
@@ -102,9 +100,9 @@
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
-            @if($errors->has('post.start_time'))
+            @if($errors->has('start_time'))
             <div class="validerror">
-            @foreach($errors->get('post.start_time') as $message)
+            @foreach($errors->get('start_time') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
@@ -124,9 +122,9 @@
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
-            @if($errors->has('post.end_time'))
+            @if($errors->has('end_time'))
             <div class="validerror">
-            @foreach($errors->get('post.end_time') as $message)
+            @foreach($errors->get('end_time') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
@@ -143,6 +141,5 @@
             <a href="/dashboard">投稿せずトップページに戻る</a>
         </div>
     </body>
-
 </html>
 </x-app-layout>

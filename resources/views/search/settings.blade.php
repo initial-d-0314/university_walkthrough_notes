@@ -91,7 +91,6 @@
         @endforeach
         <div>
             {{ $settings->appends(request()->except(['_token','_method']))->onEachSide(5)->links() }}
-            <!--class="paginationについてCSSでいじる必要あり-->
         </div>
 </body>
 </x-app-layout>

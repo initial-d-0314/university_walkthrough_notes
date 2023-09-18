@@ -11,7 +11,9 @@ use App\Models\Category;
 
 class GenreCategoryController extends Controller
 {
-//Categoryが編集と追加を考える下位分類なので注意
+    //ジャンルとカテゴリについて管理する
+    //ジャンルは事前に決められた7種類
+    //Categoryが編集と追加を考える下位分類なので注意
 
     /*
     *ジャンルとカテゴリ一覧画面を表示する
@@ -21,23 +23,23 @@ class GenreCategoryController extends Controller
     public function create(Category $category,Genre $genre)
     {
         return view('genre_category.create')->with([
-        'genres'=>$genre->get(),
+            'genres'=>$genre->get(),
         ]);
     }
 
     public function index(Category $category,Genre $genre)
     {
         return view('genre_category.index')->with([
-        'categories'=>$category->get(),
-        'genres'=>$genre->get(),
+            'categories'=>$category->get(),
+            'genres'=>$genre->get(),
         ]);
     }
         
     public function edit(Category $category,Genre $genre)
     {
         return view('genre_category.edit')->with([
-        'genres'=>$genre->get(),
-        'category' => $category,
+            'genres'=>$genre->get(),
+            'category' => $category,
         ]);
     }
     

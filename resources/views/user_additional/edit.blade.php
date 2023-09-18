@@ -26,14 +26,12 @@
                 <option value="{{ $university->id }}" {{($user->university_id == $university->id ||  old('post.university_id') == $university->id) ? 'selected' : '' }}>{{ $university->name }}</option>
                 @endforeach
             </select>
-            </select>
             @if($errors->has('post.university_id'))
             <div class="validerror">
             @foreach($errors->get('post.university_id') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
-                
                 
             <h2>区分選択</h2>
             <p>あなたがどの区分に所属しているかです。</p>
@@ -59,7 +57,6 @@
             <p>卒業している場合などは以前の所属を記入してください。</p>
             <input type="text" name="additional[section]" placeholder="タイトル" value="{{ $errors->any() ? old('additional.section'): $user->section}}"/>
             <br>
-            <!--エラーがある場合リストで全部見せる-->
             @if($errors->has('post.title'))
             <div class="validerror">
             @foreach($errors->get('post.title') as $message)
@@ -78,7 +75,7 @@
                 
             <h2>画像</h2>
             <div class="image">
-            <p>画像を追加できます。すでにある画像は上書きします。</p>
+            <p>画像を追加できます。すで画像が存在する場合は上書きします。</p>
             <input type="file" name="image">
             </div>
             
@@ -92,9 +89,8 @@
             <input type="submit" value="編集を確定する" />
         </form>
         <div class="footer">
-            <a href="/">投稿せずトップページに戻る</a>
+            <a href="/useradditional/my">編集せずに戻る</a>
         </div>
     </body>
-
 </html>
 </x-app-layout>

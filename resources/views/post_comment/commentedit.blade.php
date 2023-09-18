@@ -47,7 +47,6 @@
                     <input type="hidden" name="comment[user_id]" value="{{Auth::id()}}">
                     <input type="hidden" name="comment[post_id]" value="{{$post->id}}">
                     <h2>タイトル</h2>
-                    {{--エラーがある場合初期値を差し替える--}}
                     <input type="text" name="comment[title]" placeholder="タイトル" value="{{ $errors->any() ? old('comment.title'): $comment->title}}"/>
                     <br>
                     @if($errors->has('comment.title'))

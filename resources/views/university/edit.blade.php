@@ -23,7 +23,6 @@
             <p>必須です。大学のキャンパス名まで含んだ名称です。略称ではなく正式名称で登録をお願いします。</p>
             <input type="text" name="university[name]" value="{{ $errors->any() ? old('university.name'): $university->name}}"/>
             <br>
-            {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.name'))
             <div class="validerror">
                 @foreach($errors->get('university.name') as $message)
@@ -34,7 +33,6 @@
             <h2>分類</h2>
             <p>大学の分類です。（例：理系、文系、スポーツ専門）</p>
             <input type="text" name="university[section]" value="{{ $errors->any() ? old('university.section'): $university->section}}"/>
-            {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.section'))
             <div class="validerror">
                 @foreach($errors->get('university.section') as $message)
@@ -45,7 +43,6 @@
             <h2>住所</h2>
             <p>大学の住所です。（例：東京都世田谷区宇奈根1-1-1）</p>
             <input type="text" name="university[address]" value="{{ $errors->any() ? old('university.address'): $university->address}}"/>
-            {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.address'))
             <div class="validerror">
                 @foreach($errors->get('university.address') as $message)
@@ -57,7 +54,6 @@
             <p>大学の公式サイトのURLです。</p>
             <input type="text" name="university[url]" value="{{ $errors->any() ? old('university.url'): $university->url}}{{old('university.url')}}"/>
             <br>
-            {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.url'))
             <div class="validerror">
                 @foreach($errors->get('university.url') as $message)
@@ -69,7 +65,6 @@
             <p>大学の最寄り駅です。一つでお願いします。（例：東急田園都市線・大井町線「二子玉川」駅）</p>
             <input type="text" name="university[nearest_station]" value="{{ $errors->any() ? old('university.nearest_station'): $university->nearest_station}}"/>
             <br>
-            {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('university.nearest_station'))
             <div class="validerror">
                 @foreach($errors->get('university.nearest_station') as $message)

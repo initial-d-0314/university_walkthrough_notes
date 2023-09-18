@@ -27,7 +27,6 @@ class SearchSetting extends Model
     //eagerロードする
     function getPaginateByLimitwithUser(int $user_id,int $limit_count = 5)
     {
-        
         return $this::with(['user','university','genre','category'])->where('make_user_id',$user_id)->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
 

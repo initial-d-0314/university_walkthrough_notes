@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>自分のお気に入り一覧</h1>
+    <h1>{{$user->id == \Auth::user()->id ?"自分" : $user->name}}のお気に入り一覧</h1>
     <div class='posts'>
         @foreach ($posts as $post)
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
@@ -77,7 +77,6 @@
         @endif
         <div>
             {{ $posts->onEachSide(5)->links() }}
-            <!--class="paginationについてCSSでいじる必要あり-->
         </div>
 </body>
 </x-app-layout>

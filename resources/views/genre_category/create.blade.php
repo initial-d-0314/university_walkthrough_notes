@@ -22,7 +22,6 @@
                 <option value="{{ $genre->id }}" {{old('category.genre_id') == $genre->id ? 'selected' : '' }}>{{ $genre->name }}</option>
                 @endforeach
             </select>
-            {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('category.genre_id'))
             <div class="validerror">
                 @foreach($errors->get('category.genre_id') as $message)
@@ -30,11 +29,9 @@
                 @endforeach</div>
             @endif
 
-
             <h2>カテゴリ名</h2>
             <p>必須です。カテゴリの名前です。（例：雨宿り）</p>
             <input type="text" name="category[name]" placeholder="カテゴリ名" value="{{old('category.name')}}"/><br>
-            {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('category.name'))
             <div class="validerror">
                 @foreach($errors->get('category.name') as $message)
@@ -45,7 +42,6 @@
             <h2>説明文</h2>
             <p>必須です。カテゴリについての説明文です。なるべく短くしてもらえると助かります。</p>
             <input type="text" name="category[description]" placeholder="説明文" value="{{old('category.description')}}"/><br>
-            {{--エラーがある場合リストで全部見せる--}}
             @if($errors->has('category.description'))
             <div class="validerror">
                 @foreach($errors->get('category.description') as $message)
