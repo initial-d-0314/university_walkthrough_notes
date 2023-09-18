@@ -71,7 +71,6 @@
         @endforeach
         <div>
             {{ $posts->onEachSide(5)->links() }}
-            <!--class="paginationについてCSSでいじる必要あり-->
         </div>
 </body>
 </x-app-layout>

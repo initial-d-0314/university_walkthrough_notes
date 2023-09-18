@@ -32,9 +32,7 @@
 
             <h2>本文</h2>
             <p>必須です。投稿の本文です。</p>
-            {{--エラーがある場合初期値を差し替える--}}
             <textarea name="post[body]" placeholder="投稿内容を書いてね">{{ $errors->any() ? old('post.body'): $post->body}}</textarea><br>
-            <!--エラーがある場合リストで全部見せる-->
             @if($errors->has('post.body'))
             <div class="validerror">
             @foreach($errors->get('post.body') as $message)
@@ -50,7 +48,7 @@
                 @foreach($genres as $genre)
                 <optgroup label="{{$genre->name}}:{{$genre->description}}">
                     @foreach($categories as $category)
-                    @continue($genre->id != $category->genre_id)
+@continue($genre->id != $category->genre_id)
                     <option value="{{ $category->id }}" {{($post->category_id == $category->id || old('post.category_id') == $category->id) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                     @endforeach
@@ -71,7 +69,6 @@
                 <option value="{{ $university->id }}" {{($post->university_id == $university->id || old('post.university_id') == $university->id) ? 'selected' : '' }}>{{ $university->name }}</option>
                 @endforeach
             </select>
-            </select>
             @if($errors->has('post.university_id'))
             <div class="validerror">
             @foreach($errors->get('post.university_id') as $message)
@@ -79,9 +76,7 @@
             @endforeach</div>
             @endif
 
-
             <h1>オプション</h1>
-
             <h2>開始時刻、終了時刻</h2>
             <p>イベントやキャンペーンの日時を記載できます。使用する場合は開始時刻と終了時刻の両方の入力が必要です。</p>
             <p>正確な値がわからない場合には適当な値でも構いません。</p>
@@ -102,7 +97,6 @@
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
-
 
             <p>終了日時</p>
             <input type="date" name="post[endate]" value="{{ $errors->any() ? old('post.endate'): $post->endate}}" />

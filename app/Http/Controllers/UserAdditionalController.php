@@ -8,17 +8,19 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Cloudinary;  //dev4_画像アップロード
+use Cloudinary;
 
 class UserAdditionalController extends Controller
 {
-    //ユーザーの固有情報とそれに関連するアレコレを管理する
+    /*
+    *ユーザーの固有情報と、それに関連するお気に入りや投稿を管理する
+    */
     public function edit(University $university)
     {
+        //id直打ちで編集画面に入られたくないのでユーザー情報を取得する
         $user_id = \Auth::user()->id;
         $user = User::where("id",$user_id)->first();
 
-        //id直打ちで変なことになりそうなので暗黙の結合使いたくない
         return view('user_additional.edit')->with([
         'universities'=>$university->get(),
         'user' => $user,
@@ -43,39 +45,39 @@ class UserAdditionalController extends Controller
             }
         }
         $user->fill($input_useradditional)->save();
-        //updateでなくsaveを利用すれば変更がない場合にDBにアクセスしないという利点がある
         return redirect('/useradditional/my');
     }
     
     public function index(Post $post)
     {
+        //自分用ページなので自分のidのみを取得する
         $user_id = \Auth::user()->id;
         $user = User::where("id",$user_id)->first();
-        
         return view('user_additional.posts')->with([
             'posts'=> $post->getPaginateByLimitwithUser($user_id,5),
             'user' => $user,
         ]);
     }
+    
     public function index_other(User $user,Post $post)
     {
-        return view('user_additional.posts_other')->with([
+        //他人用ページなので暗黙の結合を使う
+        return view('user_additional.posts')->with([
             'posts'=> $post->getPaginateByLimitwithUser($user->id,5),
             'user' => $user,
         ]);
     }
     
-    
-    //クエリビルダを使うことになる？
     public function favorite(Post $post)
     {
+        //自分のお気に入りを参照する
         $user_id = \Auth::user()->id;
         $user = User::where("id",$user_id)->first();
+        //joinで結合して疑似的にpost->favorite->userのリレーションをたどる
         $posts = Post::query()->join('favorites', 'posts.id', '=', 'favorites.post_id')->join('users', 'favorites.user_id', '=','users.id' );
-        //joinで結合して疑似的にリレーションをたどる
         $posts->where('favorites.user_id',$user->id)->get();
         $posts = $posts->withcount('helps')->paginate(5)->withQueryString();
-        return view('user_additional.posts_favorite')->with([
+        return view('user_additional.favorites')->with([
             'posts'=> $posts,
             'user' => $user,
         ]);
@@ -83,10 +85,13 @@ class UserAdditionalController extends Controller
     
     public function favorite_other(User $user,Post $post)
     {
+        //指定された番号のユーザーのお気に入りを取得
+        //joinで結合して疑似的にpost->favorite->userのリレーションをたどる
         $posts = Post::query()->join('favorites', 'posts.id', '=', 'favorites.post_id')->join('users', 'favorites.user_id', '=','users.id' );
         $posts->where('favorites.user_id',$user->id)->get();
+        //ぺジネーションを5で取っているのがまだ気になる
         $posts = $posts->withcount('helps')->paginate(5)->withQueryString();
-        return view('user_additional.posts_favorite_other')->with([
+        return view('user_additional.favorites')->with([
             'posts'=> $posts,
             'user' => $user,
         ]);

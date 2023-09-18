@@ -11,7 +11,6 @@ class Genre extends Model
     
     /*追加を考えていないためfillableは無い*/
     
-
     // Postに対するリレーション（1対多）
     public function posts()   
     {

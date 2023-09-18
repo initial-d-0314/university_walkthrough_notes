@@ -21,10 +21,13 @@ use App\Models\SearchSetting;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-use Cloudinary;  //dev4_画像アップロード
+use Cloudinary;
 
 class PostCommentController extends Controller
 {
+    /*
+    *投稿とコメントを管理するほか、検索機能やお気に入り機能もここに含まれる
+    */
     use SoftDeletes;
     public function index(Post $post)
     {
@@ -33,25 +36,27 @@ class PostCommentController extends Controller
 
     public function create(Post $post,Genre $genre,Category $category,University $university)
     {
-        //ユーザーの情報見る
+        //ユーザーの情報を取得
         $user_id = \Auth::user()->id;
         $user = User::where("id",$user_id)->first();
-        //ユーザー所属のidを見る
+        //ユーザーの登録している大学のidを、選択肢の初期値にするために取得する
         $univ = $user->university_id;
+        
         return view('post_comment.create')->with([
-        'universities'=>$university->get(),
-        'genres'=>$genre->get(),
-        'categories' => $category->get(),
-        'univ' =>$univ,
+            'universities'=>$university->get(),
+            'genres'=>$genre->get(),
+            'categories' => $category->get(),
+            'univ' =>$univ,
         ]);
     }
+    
     public function edit(Post $post,Genre $genre,Category $category,University $university)
     {
         return view('post_comment.edit')->with([
-        'post' => $post,
-        'universities'=>$university->get(),
-        'genres'=>$genre->get(),
-        'categories' => $category->get(),
+            'post' => $post,
+            'universities'=>$university->get(),
+            'genres'=>$genre->get(),
+            'categories' => $category->get(),
         ]);
     }
 
@@ -59,26 +64,28 @@ class PostCommentController extends Controller
     {
         return view('post_comment.show')->with(['post' => $post]);
     }
-    //表示部ここまで
     
     public function store(PostRequest $request,Post $post, Category $category)
     {
+        //投稿ユーザーのidを加える
         $input = $request['post'];
-        $input += ['user_id' => \Auth::user()->id];  //追加
+        $input += ['user_id' => \Auth::user()->id];
         
+        //選択されたカテゴリからジャンルを取得して加える
         $category = Category::find($input['category_id']);
-        $input += ['genre_id' => $category->genre->id];  //追加
+        $input += ['genre_id' => $category->genre->id];
         
+        //時間を登録する場合、日付と時間を結合して日時のデータとする
         if(!empty($input['use_time'])){
-        $start_time = $input['stdate'] .' '. $input['sttime']. ":00"; //文字列結合をする
-        $end_time = $input['endate'] .' '. $input['entime']. ":00"; 
-        $input += ['start_time' => $start_time,'end_time' => $end_time,];
+            $start_time = $input['stdate'] .' '. $input['sttime']. ":00"; //文字列結合
+            $end_time = $input['endate'] .' '. $input['entime']. ":00"; 
+            $input += ['start_time' => $start_time,'end_time' => $end_time,];
         }
         
         //画像投稿
         if($request->file('image')){
-        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-        $input += ['image_url' => $image_url];
+            $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $input += ['image_url' => $image_url];
         }
         
         $post->fill($input)->save();
@@ -89,10 +96,12 @@ class PostCommentController extends Controller
     public function update(PostRequest $request,Post $post)
     {
         $input_post = $request['post'];
+        //時間を登録する場合、日付と時間を結合して日時のデータとする
+        //フォームの入力そのものには日時のまとまったデータがないため、結合の処理が再度必要
         if(!empty($input_post['use_time'])){
-        $start_time = $input_post['stdate'] .' '. $input_post['sttime']. ":00"; //文字列結合をする
-        $end_time = $input_post['endate'] .' '. $input_post['entime']. ":00"; 
-        $input_post+= ['start_time' => $start_time,'end_time' => $end_time,];
+            $start_time = $input_post['stdate'] .' '. $input_post['sttime']. ":00"; //文字列結合をする
+            $end_time = $input_post['endate'] .' '. $input_post['entime']. ":00"; 
+            $input_post+= ['start_time' => $start_time,'end_time' => $end_time,];
         }
         
         //削除のチェックがオンである場合はアップロードもしない
@@ -112,7 +121,7 @@ class PostCommentController extends Controller
         return redirect('/post/'. $post->id);
     }
     
-    //投稿詳細ページから使う想定で
+    //投稿削除
     public function delete(Request $request,Post $post){
         $input = $request['post'];
         $userid = Auth::user()->id;
@@ -125,7 +134,10 @@ class PostCommentController extends Controller
             abort(403,"投稿者ではないので削除できません");
         }
     }
-    //コメント投稿関連について
+    
+    /*
+    *以降、コメント投稿関連について
+    */
     
     public function commentedit(Post $post,PostComment $postcomment){
         return view('post_comment.commentedit')->with([
@@ -136,6 +148,7 @@ class PostCommentController extends Controller
     
     public function commentstore(PostCommentRequest $request,PostComment $postcomment){
         $input = $request['comment'];
+        //投稿ユーザーのidを加える
         $input += ['user_id' => \Auth::user()->id];  //追加
         $postcomment->fill($input)->save();
         return redirect('/post/'. $input['post_id']);
@@ -143,12 +156,13 @@ class PostCommentController extends Controller
     
     public function commentupdate(PostCommentRequest $request,Post $post,PostComment $postcomment){
         $input_comment = $request['comment'];
+        //投稿ユーザーのidを加える
         $input_comment += ['user_id' => \Auth::user()->id];  //追加
         $postcomment->fill($input_comment)->save();
         return redirect('/post/'. $post->id);
     }
     
-    //コメントの編集ページから使う想定で
+    //コメント削除
     public function commentdelete(Request $request,Post $post,PostComment $postcomment){
         $input = $request['comment'];
         $userid = Auth::user()->id;
@@ -165,6 +179,7 @@ class PostCommentController extends Controller
     //検索機能
     public function search(Request $request,Genre $genre,Category $category,University $university){
         $posts = Post::query();
+        /* 検索の前段階の処理 */
         //各種情報
         $userid = $request->input('userid');
         $univid = $request->input('univid');
@@ -176,7 +191,8 @@ class PostCommentController extends Controller
         $eventd = $request->input('eventd');
         $eventa = $request->input('eventa');
         $eventn = $request->input('eventn');
-        $keyword = $request->input('keyword'); //キーワード
+        //フリーワード検索のキーワード
+        $keyword = $request->input('keyword'); 
         
         /* イベントの開催日時に関しての処理 */
         //現在時刻を文字列で取得
@@ -184,8 +200,11 @@ class PostCommentController extends Controller
         date_default_timezone_set('Asia/Tokyo');
         $date = strtotime("now");
         $nowtime = date('Y-m-d H:i:s',$date);
+        
         //全部無入力かどうかの判定、もし全部無入力なら絞り込みはしない
         if(!(empty($eventn)&&empty($eventb)&&empty($eventd)&&empty($eventa))){
+            //「該当する区間がオンでないなら、その区間以外に限定する」という処理になっている
+            //これにより複数の区間の絞り込みを行える
             if(empty($eventn)){
                 if(empty($eventb)) {
                     $posts->whereNot('start_time','>',$nowtime)->get();
@@ -232,7 +251,7 @@ class PostCommentController extends Controller
                 $posts->where('university_id',$univid)->get();
         }
         /* ジャンルとカテゴリidから検索処理 */
-        //両方入ってもいいけど一件もヒットしなくなるよと書いておく
+        //両方入力してもいいけど一件もヒットしなくなるよと書いておく
         if(!empty($genreid)) {
                 $posts->where('genre_id',$genreid)->get();
         }
@@ -240,7 +259,7 @@ class PostCommentController extends Controller
                 $posts->where('category_id',$categoryid)->get();
         }
         
-        /* 入力情報整理 */
+        /* viewへの受け渡し準備 */
         //viewの入力欄などに反映させたいので、汚いがこういう形で書いておく
         $array=array(
         'userid' => $request->input('userid'),
@@ -263,7 +282,6 @@ class PostCommentController extends Controller
             'categories' => $category->get(),
             'datas' => $array,
             ]);
-        //ページを開き直すとともに、$postsの情報をHTMLへ送る
     }
     
     //1ページ目にクエリ文字列入れたいという要望に備えて：
@@ -289,16 +307,16 @@ class PostCommentController extends Controller
     $post_id = $request->post_id; // 投稿のidを取得
     // すでにいいねがされているか判定するためにhelpsテーブルから1件取得
     $already_helped = Help::where('user_id', $user_id)->where('post_id', $post_id)->first(); 
-    if (!$already_helped) {
-        //なかった場合
-        $help = new Help; // Helpクラスのインスタンスを作成
-        $help->post_id = $post_id;
-        $help->user_id = $user_id;
-        $help->save();
-    } else {
-        //あった場合はdeleteする（ソフトデリートの設定があるのでforcedeleteする）
-        Help::where('post_id', $post_id)->where('user_id', $user_id)->forceDelete();
-    }
+        if (!$already_helped) {
+            //なかった場合
+            $help = new Help; // Helpクラスのインスタンスを作成
+            $help->post_id = $post_id;
+            $help->user_id = $user_id;
+            $help->save();
+        } else {
+            //あった場合はdeleteする（ソフトデリートの設定があるのでforcedeleteする）
+            Help::where('post_id', $post_id)->where('user_id', $user_id)->forceDelete();
+        }
     // 投稿のいいね数を取得
     $post_helps_count = Post::withCount('helps')->findOrFail($post_id)->helps_count;
     $param = [
@@ -313,20 +331,22 @@ class PostCommentController extends Controller
     $post_id = $request->post_id; // 投稿のidを取得
     // すでにいいねがされているか判定するためにhelpsテーブルから1件取得
     $already_favorited = Favorite::where('user_id', $user_id)->where('post_id', $post_id)->first(); 
-    if (!$already_favorited) {
-        //なかった場合
-        $favorite = new Favorite; // Helpクラスのインスタンスを作成
-        $favorite->post_id = $post_id;
-        $favorite->user_id = $user_id;
-        $favorite->save();
-    }else{
-        //あった場合はdeleteする（ソフトデリートの設定があるのでforcedeleteする）
-        Favorite::where('post_id', $post_id)->where('user_id', $user_id)->forceDelete();
-    }
+        if (!$already_favorited) {
+            //なかった場合
+            $favorite = new Favorite; // Helpクラスのインスタンスを作成
+            $favorite->post_id = $post_id;
+            $favorite->user_id = $user_id;
+            $favorite->save();
+        }else{
+            //あった場合はdeleteする（ソフトデリートの設定があるのでforcedeleteする）
+            Favorite::where('post_id', $post_id)->where('user_id', $user_id)->forceDelete();
+        }
     }
     
+    /*
+    *検索設定の保存と呼び出しについて
+    */
     
-    //検索設定の保存と呼び出しについて
     //設定一覧へのルート
     public function index_setting(SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
     {
@@ -338,7 +358,8 @@ class PostCommentController extends Controller
             'categories' => $category->get(),
             ]);
     }
-    //todo:検索設定を保存するルート
+    
+    //検索設定の保存
     public function savesetting(SearchRequest $request,SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
     {
         $makeuserid = Auth::user()->id;
@@ -348,15 +369,15 @@ class PostCommentController extends Controller
         $categoryid = $request->input('categoryid');
         
         $input = $request->input();
-        $input += ['make_user_id' => $makeuserid,
-        'user_id' => $userid,
-        'university_id' => $univid,
-        'genre_id' => $genreid,
-        'category_id' => $categoryid,];
-        //
+        //フォームと内部で名前の異なる各種設定を加える
+        $input += [
+            'make_user_id' => $makeuserid,
+            'user_id' => $userid,
+            'university_id' => $univid,
+            'genre_id' => $genreid,
+            'category_id' => $categoryid,
+        ];
         $searchsetting->fill($input)->save();
-        //今回は事前に$Postの中身が存在するのでその中身の変更だけにとどまる
-        //updateでなくsaveを利用すれば変更がない場合にDBにアクセスしないという利点がある
         return redirect('/search/setting');
     }
 

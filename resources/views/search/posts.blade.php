@@ -35,7 +35,7 @@
             ジャンル：<select name="genreid">
                 <option value="">（ジャンル未選択）</option>
                 @foreach($genres as $genre)
-                    <option value="{{ $genre->id }}"{{( $datas["genreid"] == $genre->id ||old('genreid') == $genre->id) ? 'selected' : '' }} >{{ $genre->name }}</option>
+                <option value="{{ $genre->id }}"{{( $datas["genreid"] == $genre->id ||old('genreid') == $genre->id) ? 'selected' : '' }} >{{ $genre->name }}</option>
                 @endforeach
             </select>
             
@@ -44,7 +44,7 @@
                 @foreach($genres as $genre)
                 <optgroup label="{{$genre->name}}:{{$genre->description}}">
                     @foreach($categories as $category)
-                        @continue($genre->id != $category->genre_id)
+@continue($genre->id != $category->genre_id)
                         <option value="{{ $category->id }}" {{($datas["categoryid"] == $category->id||old('categoryid') == $category->id) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 @endforeach
@@ -72,8 +72,8 @@
             <br>
             <button type="submit">検索</button>
             <button type="submit" formaction="/search/setting/add">この設定を保存</button>
-            <!--お行儀が悪いけどこうするしか…-->
             <br>
+            <a href="/search/setting">保存した検索設定一覧</a>
             <p>検索機能についての注意：
             ユーザーidは対象となるユーザーの個人ページに記載されています。
             ジャンルとカテゴリは同時に指定できますが、カテゴリの所属ジャンルと異なるジャンルを同時に選択すると、検索がうまくいかない可能性があります。
@@ -138,7 +138,6 @@
         @endforeach
         <div>
             {{ $posts->appends(request()->except(['_token','_method']))->onEachSide(5)->links() }}
-            <!--class="paginationについてCSSでいじる必要あり-->
         </div>
 </body>
 </x-app-layout>

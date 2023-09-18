@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>自分の投稿一覧</h1>
+    <h1>{{$user->id == \Auth::user()->id ? "自分" : $user->name}}の投稿一覧</h1>
     <div>
         @if($user->image_url)
             <div class="image">
@@ -21,8 +21,13 @@
         <p>区分：{{$user->grade ? : "（未登録）"}}</p>
         <p>分野：{{$user->section ? : "（未登録）"}}</p>
         <p>自己紹介：{{$user->introduction ? : "（未登録）"}}</p>
-        <p>[<a href="/useradditional/edit">編集</a>]</p>
-        <p>[<a href="/useradditional/my/favorite">お気に入り一覧</a>]</p>
+        @if($user->id == \Auth::user()->id)<p>[<a href="/useradditional/edit">編集</a>]</p>@endif
+        <p>[<a href="{{route('search_index', ['userid' => $user->id])}}">このユーザーの投稿を検索する</a>]</p>
+@if($user->id == \Auth::user()->id)
+        <p>[<a href="/useradditional/my/favorite">自分のお気に入り一覧</a>]</p>
+@else
+        <p>[<a href="/useradditional/id/{{$user->id}}/favorite">このユーザーのお気に入り一覧</a>]</p>
+@endif
     </div>
     <div class='posts'>
         @foreach ($posts as $post)
@@ -83,7 +88,6 @@
         @endforeach
         <div>
             {{ $posts->onEachSide(5)->links() }}
-            <!--class="paginationについてCSSでいじる必要あり-->
         </div>
 </body>
 </x-app-layout>

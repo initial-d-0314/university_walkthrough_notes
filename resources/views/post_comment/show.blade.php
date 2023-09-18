@@ -71,7 +71,6 @@
         <a href={{$ref}}>一覧へ戻る</a>
         @endif
         {{--コメント投稿欄--}}
-
         <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
             <div class="input_comment">
                 <form action="/post/comment" method="POST">

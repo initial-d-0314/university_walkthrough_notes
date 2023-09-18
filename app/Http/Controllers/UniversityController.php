@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UniversityController extends Controller
 {
+    /*
+    *大学の情報を管理する
+    */
+    
     public function index(University $university)
     {
         return view('university.index')->with([
@@ -20,7 +24,8 @@ class UniversityController extends Controller
     public function create(University $university)
     {
         return view('university.create')->with([
-            'universities' => $university->get()]);
+            'universities' => $university->get()
+        ]);
     }
     
     public function edit(University $university)
@@ -32,7 +37,6 @@ class UniversityController extends Controller
     {
         $input = $request['university'];
         $university->fill($input)->save();
-        //saveした時点でidとか日時とかが割り振られている
         return redirect('/university');
     }
     
@@ -40,8 +44,6 @@ class UniversityController extends Controller
     {
         $input_university = $request['university'];
         $university->fill($input_university)->save();
-        //今回は事前に$Postの中身が存在するのでその中身の変更だけにとどまる
-        //updateでなくsaveを利用すれば変更がない場合にDBにアクセスしないという利点がある
         return redirect('/university');
     }
 }

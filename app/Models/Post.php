@@ -37,7 +37,7 @@ class Post extends Model
     //ユーザーを限定して行う
     function getPaginateByLimitwithUser(int $user_id,int $limit_count = 5)
     {
-    return $this::with(['user'])->withCount('helps')->where('user_id',$user_id)->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    return $this::with(['genre','category','university','user'])->withCount('helps')->where('user_id',$user_id)->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
     // Userに対するリレーション（1対多）
     public function user()
@@ -69,10 +69,22 @@ class Post extends Model
     }
     
     //いいね機能の手引き
-    // 実装1
+    //実装1：Helpに対するリレーション（1対多）
     public function helps()
     {
         return $this->hasMany(Help::class);
+    }
+    
+    //Favoriteに対するリレーション（1対多）
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    
+    // SearchSettingに対するリレーション（1対多）
+    public function searchsettings()
+    {
+        return $this->hasMany(SearchSetting::class);
     }
     
     // 実装2
@@ -81,22 +93,10 @@ class Post extends Model
         return Help::where('user_id', $user->id)->where('post_id', $this->id)->first() !==null;
     }
     
-    // 実装1
-    public function favorites()
-    {
-        return $this->hasMany(Favorite::class);
-    }
-    
     // 実装2
     // Viewで使う、いいねされているかを判定するメソッド。
     public function isFavoritedBy($user): bool {
         return Favorite::where('user_id', $user->id)->where('post_id', $this->id)->first() !==null;
-    }
-    
-    // SearchSettingに対するリレーション（1対多）
-    public function searchsettings()
-    {
-        return $this->hasMany(SearchSetting::class);
     }
     
 }
