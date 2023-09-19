@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserAdditionalRequest;
 use App\Models\University;
 use App\Models\User;
 use App\Models\Post;
@@ -27,7 +28,7 @@ class UserAdditionalController extends Controller
         ]);
     }
     
-    public function update(Request $request)
+    public function update(UserAdditionalRequest $request)
     {
         $user_id = \Auth::user()->id;
         $user = User::where("id",$user_id )->first();

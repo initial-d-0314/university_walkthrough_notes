@@ -52,12 +52,17 @@ class PostCommentController extends Controller
     
     public function edit(Post $post,Genre $genre,Category $category,University $university)
     {
+        $userid = Auth::user()->id;
+        if($post->user_id == $userid){
         return view('post_comment.edit')->with([
             'post' => $post,
             'universities'=>$university->get(),
             'genres'=>$genre->get(),
             'categories' => $category->get(),
         ]);
+        }else{
+            abort(403,"投稿者ではないので編集できません");
+        }
     }
 
     public function show(Post $post)
@@ -97,7 +102,7 @@ class PostCommentController extends Controller
     {
         $input_post = $request['post'];
         //時間を登録する場合、日付と時間を結合して日時のデータとする
-        //フォームの入力そのものには日時のまとまったデータがないため、結合の処理が再度必要
+        //バリデーションにおいて結合を行ったが、フォームの入力には日時のまとまったデータがないため、結合の処理が再度必要
         if(!empty($input_post['use_time'])){
             $start_time = $input_post['stdate'] .' '. $input_post['sttime']. ":00"; //文字列結合をする
             $end_time = $input_post['endate'] .' '. $input_post['entime']. ":00"; 
@@ -140,10 +145,15 @@ class PostCommentController extends Controller
     */
     
     public function commentedit(Post $post,PostComment $postcomment){
+        $userid = Auth::user()->id;
+        if($postcomment->user_id == $userid){
         return view('post_comment.commentedit')->with([
         'post' => $post,
         'comment' => $postcomment
         ]);
+        }else{
+            abort(403,"投稿者ではないので編集できません");
+        }
     }
     
     public function commentstore(PostCommentRequest $request,PostComment $postcomment){

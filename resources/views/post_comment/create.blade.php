@@ -138,8 +138,8 @@
             <input type="submit" value="投稿する" />
         </form>
         <div class="footer">
-            <a href="/dashboard">投稿せずトップページに戻る</a>
+            <a href="/posts">投稿せず一覧に戻る</a>
         </div>
     </body>
+    </x-app-layout>
 </html>
-</x-app-layout>

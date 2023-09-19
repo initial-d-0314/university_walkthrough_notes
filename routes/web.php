@@ -76,13 +76,13 @@ Route::controller(PostCommentController::class)->middleware(['auth'])->group(fun
 });
 
 Route::controller(UserAdditionalController::class)->middleware(['auth'])->group(function(){
-    Route::get('/useradditional/id/{user}','index_other')->name('useradditional_index_other');
-    Route::get('/useradditional/edit','edit');
     Route::get('/useradditional/my','index')->name('useradditional_index');
+    Route::get('/useradditional/edit','edit');
+    Route::get('/useradditional/{user}','index_other')->name('useradditional_index_other');
     Route::put('/useradditional/','update');
     //(対象ユーザーのお気に入り投稿機能を探す)
     Route::get('/useradditional/my/favorite','favorite');
-    Route::get('/useradditional/id/{user}/favorite','favorite_other');
+    Route::get('/useradditional/{user}/favorite','favorite_other');
 });
 
 

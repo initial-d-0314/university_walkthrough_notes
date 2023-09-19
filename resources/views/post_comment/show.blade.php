@@ -13,7 +13,7 @@
         <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
             <div class='post'>
                 <h1 class='title'>{{$post->title}}</h1>
-                <h2 class='user'>投稿ユーザー：<a href="/useradditional/id/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
+                <h2 class='user'>投稿ユーザー：<a href="/useradditional/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
                 <h2 class='university'>大学：<a href="{{route('search_index', ['univid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
                 <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
                 <a href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
@@ -66,10 +66,12 @@
             $ref = request()->server->get('HTTP_REFERER');
             $hos = request()->server->get('HTTP_HOST');
         @endphp
-        {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示--}}
+        {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示、ただしリダイレクトで飛んでくることも考える必要がある--}}
         @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
-        <a href={{$ref}}>一覧へ戻る</a>
+        <a href={{$ref}}>前のページに戻る</a>
         @endif
+        <a href="/post">投稿一覧へ戻る</a>
+        <a href="/search">検索ページへ戻る</a>
         {{--コメント投稿欄--}}
         <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
             <div class="input_comment">
@@ -99,16 +101,13 @@
                 </form>
             </div>
         </div>
-        @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
-        <a href={{$ref}}>一覧へ戻る</a>
-        @endif
         {{--コメント一覧--}}
         
         <div class="comments">
             @foreach($post->postcomments as $comment)
             <div style='border:solid 1px; margin-bottom: 10px;'>
                 <h2 class='commenttitle'>{{$comment->title}}</h1>
-                <h3 class='commentuser'>投稿ユーザー：<a href="/useradditional/id/{{ $post->user->id}}">{{ $comment->user->name }}</a></h2>
+                <h3 class='commentuser'>投稿ユーザー：<a href="/useradditional/{{ $post->user->id}}">{{ $comment->user->name }}</a></h2>
                 <p>{{$comment->body}}</p>
                 @if($comment->user_id==auth()->id())
                 <h4 class="edit">[<a href="/post/comment/{{$post->id}}/{{ $comment->id }}/edit">編集</a>]</h3>
@@ -117,8 +116,10 @@
             @endforeach
         </div>
         @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
-        <a href={{$ref}}>一覧へ戻る</a>
+        <a href={{$ref}}>前のぺージに戻る</a>
         @endif
+        <a href="/post">投稿一覧へ戻る</a>
+        <a href="/search">検索ページへ戻る</a>
 </body>
 </x-app-layout>
 </html>

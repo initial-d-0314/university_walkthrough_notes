@@ -23,9 +23,7 @@ class UniversityController extends Controller
         
     public function create(University $university)
     {
-        return view('university.create')->with([
-            'universities' => $university->get()
-        ]);
+        return view('university.create');
     }
     
     public function edit(University $university)

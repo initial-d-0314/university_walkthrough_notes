@@ -26,7 +26,7 @@
 @if($user->id == \Auth::user()->id)
         <p>[<a href="/useradditional/my/favorite">自分のお気に入り一覧</a>]</p>
 @else
-        <p>[<a href="/useradditional/id/{{$user->id}}/favorite">このユーザーのお気に入り一覧</a>]</p>
+        <p>[<a href="/useradditional/{{$user->id}}/favorite">このユーザーのお気に入り一覧</a>]</p>
 @endif
     </div>
     <div class='posts'>
