@@ -145,10 +145,9 @@
         @endphp
         {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示--}}
         <div class="footer">
-            <a href={{$ref}}>編集せず戻る</a>
+            <a href={{$ref}}>編集せず前のページに戻る</a>
         </div>
     @endunless
     </body>
-
-</html>
 </x-app-layout>
+</html>

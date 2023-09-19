@@ -52,7 +52,7 @@
         <input type="submit" value="カテゴリ追加"/>
         </form>
         <div class="footer">
-            <a href="/category">追加せず戻る</a>
+            <a href="/category">追加せずカテゴリ一覧へ戻る</a>
         </div>
     </body>
 </html>

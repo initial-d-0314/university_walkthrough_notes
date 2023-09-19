@@ -10,6 +10,14 @@
 
 <body>
     <h1>{{$user->id == \Auth::user()->id ?"自分" : $user->name}}のお気に入り一覧</h1>
+        @php
+            $ref = request()->server->get('HTTP_REFERER');
+            $hos = request()->server->get('HTTP_HOST');
+        @endphp
+        {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示--}}
+        @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
+        <a href={{$ref}}>前のページに戻る</a>
+        @endif
     <div class='posts'>
         @foreach ($posts as $post)
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
@@ -67,13 +75,9 @@
                 </div>
             </div>
         @endforeach
-        @php
-            $ref = request()->server->get('HTTP_REFERER');
-            $hos = request()->server->get('HTTP_HOST');
-        @endphp
         {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示--}}
         @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
-        <a href={{$ref}}>戻る</a>
+        <a href={{$ref}}>前のページに戻る</a>
         @endif
         <div>
             {{ $posts->onEachSide(5)->links() }}
