@@ -1,23 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-<head>
-    <meta charset="utf-8">
-    <title>大学攻略ガイド</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-</head>
-
 <body>
     <h1>{{$user->id == \Auth::user()->id ?"自分" : $user->name}}のお気に入り一覧</h1>
-        @php
-            $ref = request()->server->get('HTTP_REFERER');
-            $hos = request()->server->get('HTTP_HOST');
-        @endphp
-        {{--リファラ値があり、かつ外部サイトでなければaタグで戻るリンクを表示--}}
-        @if(!empty($ref) && (strpos($ref,$hos) !== false)) 
-        <a href={{$ref}}>前のページに戻る</a>
-        @endif
+@if($user->id == \Auth::user()->id)
+        <a href={{route('useradditional_index')}}>自分のマイページに戻る</a>
+@else
+        <a href={{route('useradditional_index_other,['user'=> $user->id]')}}>{{$user->name}}のマイページに戻る</a>
+@endif
     <div class='posts'>
         @foreach ($posts as $post)
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
@@ -67,11 +57,10 @@
                                 </span>
                             @endif
                         @endauth
-                        <h3 class='post-info'><a href="post/{{ $post->id }}">コメント、投稿詳細</a></h3>
+                        <h3 class='post-info'><a href="{{route('postcomment_show', ['post' => $post->id])}}">コメント、投稿詳細</a></h3>
                         @if($post->user_id==auth()->id())
-                        <h3 class="edit">[<a href="/post/{{ $post->id }}/edit">編集</a>]</h3>
+                        <h3 class="edit">[<a href="{{route('postcomment_edit', ['post' => $post->id])}}">編集</a>]</h3>
                         @endif
-
                 </div>
             </div>
         @endforeach

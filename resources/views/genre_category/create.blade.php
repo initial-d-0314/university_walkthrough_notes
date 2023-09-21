@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-    <head>
-        <meta charset="utf-8">
-        <meta name=”viewport” content=”width=device-width,initial-scale=1″>
-        <title>大学攻略ガイド</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('/css/input.css')  }}" />
-    </head>
-    <body>
+    <div class="h-full w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
+    <div class="py-12">
+    <div class="max-w-7xl mx-auto">
+    <div class="bg-white shadow-sm sm:rounded-lg">
+    <div class="p-6 text-gray-900">
 		<h1>新規カテゴリ追加</h1>
 		<hr>
-        <form action="/category" method="post">
+        <form action="{{route('genrecategory_store')}}" method="post">
             @csrf
             <h2>所属ジャンル</h2>
             <p>必須です。新規追加するカテゴリがどのジャンルに属しているかです。</p>
@@ -28,7 +23,6 @@
                 <li>{{$message}}</li>
                 @endforeach</div>
             @endif
-
             <h2>カテゴリ名</h2>
             <p>必須です。カテゴリの名前です。（例：雨宿り）</p>
             <input type="text" name="category[name]" placeholder="カテゴリ名" value="{{old('category.name')}}"/><br>
@@ -52,8 +46,11 @@
         <input type="submit" value="カテゴリ追加"/>
         </form>
         <div class="footer">
-            <a href="/category">追加せずカテゴリ一覧へ戻る</a>
+            <a href="{{route('genrecategory_index')}}">追加せずカテゴリ一覧へ戻る</a>
         </div>
-    </body>
-</html>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 </x-app-layout>

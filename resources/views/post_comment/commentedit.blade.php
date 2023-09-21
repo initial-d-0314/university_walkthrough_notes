@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-<head>
-    <meta charset="utf-8">
-    <title>大学攻略ガイド</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-</head>
-
 <body>
     <div class='posts'>
         <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
@@ -41,7 +34,7 @@
         @else
         <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
             <div class="input_comment">
-                <form action="/post/comment/{{$post->id}}/{{$comment->id}}" method="POST">
+                <form action="{{route('postcomment_commentupdate',['post'=> $post->id, 'postcomment'=> $comment->id])}}" method="POST">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="comment[user_id]" value="{{Auth::id()}}">
@@ -69,7 +62,7 @@
                 </form>
                 <hr>
                 <div>
-                <form action="/post/comment/{{$post->id}}/{{$comment->id}}/delete" method="POST">
+                <form action="{{route('postcomment_commentdelete',['post'=> $post->id, 'postcomment'=> $comment->id])}}" method="POST">
                 @csrf
                 @method('PUT')
                 <input type="checkbox" id="del" value = 'on' name="comment[deletecheck]"/>
@@ -80,7 +73,7 @@
             </div>
             <hr>
             @endunless
-            <a href="/post/{{$post->id}}">編集せず戻る</a>
+            <a href="{{route('postcomment_show', ['post' => $post->id])}}">編集せず戻る</a>
         </div>
 </body>
 </x-app-layout>

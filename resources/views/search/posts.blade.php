@@ -1,14 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-<head>
-    <meta charset="utf-8">
-    <title>大学攻略ガイド</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/css/input.css')  }}" />
-</head>
-
 <body>
     <h1>投稿検索</h1>
     <div class='searchform'>
@@ -71,21 +62,21 @@
             @endif
             <br>
             <button type="submit">検索</button>
-            <button type="submit" formaction="/search/setting/add">この設定を保存</button>
+            <button type="submit" formaction="{{route('setting_save')}}">この設定を保存</button>
             <br>
-            <a href="/search/setting">保存した検索設定一覧</a>
+            <a href="{{route('setting_index')}}">保存した検索設定一覧</a>
             <p>検索機能についての注意：
             ユーザーidは対象となるユーザーの個人ページに記載されています。
             ジャンルとカテゴリは同時に指定できますが、カテゴリの所属ジャンルと異なるジャンルを同時に選択すると、検索がうまくいかない可能性があります。
             開催期間にチェックを入れない場合は、未設定も含めたすべての期間について検索を行います。
-            フリーワード検索、およびユーザーidは現在一つのみの対応です。</p>
+            フリーワード検索、およびユーザーidは一つのみの対応です。</p>
     </div>
     <div class='posts'>
         @foreach ($posts as $post)
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
                 <div class='post'>
                 <h1 class='title'>{{$post->title}}</h1>
-                <h2 class='user'>投稿ユーザー：<a href="/useradditional/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
+                <h2 class='user'>投稿ユーザー：<a href="{{route('postcomment_index', ['user' => $post->user->id])}}">{{ $post->user->name }}</a></h2>
                 <h2 class='university'>大学：<a href="{{route('postcomment_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
                 <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('postcomment_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
                 <a href="{{route('postcomment_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
@@ -129,9 +120,9 @@
                                 </span><!-- /.likes -->
                             @endif
                         @endauth
-                        <h3 class='post-info'><a href="post/{{ $post->id }}">コメント、投稿詳細</a></h3>
+                        <h3 class='post-info'><a href="{{route('postcomment_show', ['post' => $post->id])}}">コメント、投稿詳細</a></h3>
                         @if($post->user_id==auth()->id())
-                        <h3 class="edit">[<a href="/post/{{ $post->id }}/edit">編集</a>]</h3>
+                        <h3 class="edit">[<a href="{{route('postcomment_edit', ['post' => $post->id])}}">編集</a>]</h3>
                         @endif
                 </div>
             </div>
@@ -141,4 +132,3 @@
         </div>
 </body>
 </x-app-layout>
-</html>

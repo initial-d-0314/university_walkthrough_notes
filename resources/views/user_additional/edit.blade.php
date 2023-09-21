@@ -1,18 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-    <head>
-        <meta charset="utf-8">
-        <meta name=”viewport” content=”width=device-width,initial-scale=1″>
-        <title>大学攻略ガイド</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('/css/input.css')  }}" />
-    </head>
-
     <body>
         <h1>ユーザー追加情報編集</h1>
-        <form action="/useradditional/" method="post" enctype="multipart/form-data">
+        <form action="{{route('useradditional_update')}}" method="post" enctype="multipart/form-data">
             @CSRF
             @method('PUT')
             
@@ -89,8 +79,7 @@
             <input type="submit" value="編集を確定する" />
         </form>
         <div class="footer">
-            <a href="/useradditional/my">編集せずに戻る</a>
+            <a href="{{route('useradditional_index')}}">編集せずに戻る</a>
         </div>
     </body>
-</html>
 </x-app-layout>

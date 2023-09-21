@@ -1,20 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-<head>
-        <meta charset="utf-8">
-        <meta name=”viewport” content=”width=device-width,initial-scale=1″>
-        <title>大学攻略ガイド</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('/css/input.css')  }}" />
-    </head>
     <body>
+    <div class="h-full w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
     <div class="py-12">
         <div class="max-w-7xl mx-auto">
             <div class="bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-        <form action="/university" method="post">
+        <form action="{{route('university_store')}}" method="post">
             @csrf
             <h1>大学情報追加</h1>
             <hr>
@@ -68,13 +60,13 @@
             @endif
             <div class="">
             <input type="submit" value="大学データ変更"/>
-            <a class="ml-4" href="/university">変更せず戻る</a>
-        </div>
+            <a class="ml-4" href="{{ route('university_index') }}">変更せず戻る</a>
+            </div>
         </form>
             </div>
         </div>
     </div>
 </div>
-    </body>
-</html>
+</div>
+</body>
 </x-app-layout>

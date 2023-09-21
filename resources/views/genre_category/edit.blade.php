@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-    <head>
-        <meta charset="utf-8">
-        <meta name=”viewport” content=”width=device-width,initial-scale=1″>
-        <title>大学攻略ガイド</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('/css/input.css')  }}" />
-    </head>
-    <body>
+    <div class="h-full w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
+    <div class="py-12">
+    <div class="max-w-7xl mx-auto">
+    <div class="bg-white shadow-sm sm:rounded-lg">
+    <div class="p-6 text-gray-900">
     <h1>カテゴリ情報変更</h1>
 		<hr>
-        <form action="/category/{{$category->id}}" method="post">
+        <form action="{{ route('genrecategory_update', ['category' => $category->id]) }}" method="post">
             @csrf
             @method('PUT')
             <h2>所属ジャンル</h2>
@@ -55,8 +50,11 @@
         <input type="submit" value="ジャンル情報変更"/>
         </form>
         <div class="footer">
-            <a href="/category">変更せず戻る</a>
+            <a href="{{route('genrecategory_index')}}">変更せず戻る</a>
         </div>
-    </body>
-</html>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 </x-app-layout>

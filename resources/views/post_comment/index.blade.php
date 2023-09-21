@@ -1,23 +1,15 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-<head>
-    <meta charset="utf-8">
-    <title>大学攻略ガイド</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-</head>
-
 <body>
     <h1>投稿一覧</h1>
     <p>ジャンル、カテゴリ、大学は検索画面へのリンクになっています</p>
-    <p><a href = /post/create>新規投稿作成</a></p>
+    <p><a href ={{route('postcomment_create')}}>新規投稿作成</a></p>
     <div class='posts'>
         @foreach ($posts as $post)
             <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
                 <div class='post'>
                 <h1 class='title'>{{$post->title}}</h1>
-                <h2 class='user'>投稿ユーザー：<a href="/useradditional/{{ $post->user->id}}">{{ $post->user->name }}</a></h2>
+                <h2 class='user'>投稿ユーザー：<a href="{{route('useradditional_index_other', ['user' => $post->user->id])}}">{{ $post->user->name }}</a></h2>
                 <h2 class='university'>大学：<a href="{{route('search_index', ['univid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
                 <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
                 <a href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
@@ -61,9 +53,9 @@
                                 </span>
                             @endif
                         @endauth
-                        <h3 class='post-info'><a href="post/{{ $post->id }}">コメント、投稿詳細</a></h3>
+                        <h3 class='post-info'><a href="{{route('postcomment_show', ['post' => $post->id])}}">コメント、投稿詳細</a></h3>
                         @if($post->user_id==auth()->id())
-                        <h3 class="edit">[<a href="/post/{{ $post->id }}/edit">編集</a>]</h3>
+                        <h3 class="edit">[<a href="{{route('postcomment_edit', ['post' => $post->id])}}">編集</a>]</h3>
                         @endif
 
                 </div>
@@ -74,4 +66,3 @@
         </div>
 </body>
 </x-app-layout>
-</html>

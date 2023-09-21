@@ -1,13 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-<head>
-    <meta charset="utf-8">
-    <title>大学攻略ガイド</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-</head>
-
 <body>
     <h1>{{$user->id == \Auth::user()->id ? "自分" : $user->name}}の投稿一覧</h1>
     <div>
@@ -21,12 +13,12 @@
         <p>区分：{{$user->grade ? : "（未登録）"}}</p>
         <p>分野：{{$user->section ? : "（未登録）"}}</p>
         <p>自己紹介：{{$user->introduction ? : "（未登録）"}}</p>
-        @if($user->id == \Auth::user()->id)<p>[<a href="/useradditional/edit">編集</a>]</p>@endif
+        @if($user->id == \Auth::user()->id)<p>[<a href="{{route('useradditional_edit')}}">編集</a>]</p>@endif
         <p>[<a href="{{route('search_index', ['userid' => $user->id])}}">このユーザーの投稿を検索する</a>]</p>
 @if($user->id == \Auth::user()->id)
-        <p>[<a href="/useradditional/my/favorite">自分のお気に入り一覧</a>]</p>
+        <p>[<a href="{{route('useradditional_favorite')}}">自分のお気に入り一覧</a>]</p>
 @else
-        <p>[<a href="/useradditional/{{$user->id}}/favorite">このユーザーのお気に入り一覧</a>]</p>
+        <p>[<a href="{{route('useradditional_favorite_other',['user' => $user->id])}}">このユーザーのお気に入り一覧</a>]</p>
 @endif
     </div>
     <div class='posts'>
@@ -78,9 +70,9 @@
                                 </span>
                             @endif
                         @endauth
-                        <h3 class='post-info'><a href="post/{{ $post->id }}">コメント、投稿詳細</a></h3>
+                        <h3 class='post-info'><a href="{{route('postcomment_show', ['post' => $post->id])}}">コメント、投稿詳細</a></h3>
                         @if($post->user_id==auth()->id())
-                        <h3 class="edit">[<a href="/post/{{ $post->id }}/edit">編集</a>]</h3>
+                        <h3 class="edit">[<a href="{{route('postcomment_edit', ['post' => $post->id])}}">編集</a>]</h3>
                         @endif
 
                 </div>
@@ -91,4 +83,3 @@
         </div>
 </body>
 </x-app-layout>
-</html>

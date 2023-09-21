@@ -358,7 +358,7 @@ class PostCommentController extends Controller
     */
     
     //設定一覧へのルート
-    public function index_setting(SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
+    public function setting_index(SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
     {
         $userid = Auth::user()->id;
         return view('search.settings')->with([
@@ -370,7 +370,7 @@ class PostCommentController extends Controller
     }
     
     //検索設定の保存
-    public function savesetting(SearchRequest $request,SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
+    public function setting_save(SearchRequest $request,SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
     {
         $makeuserid = Auth::user()->id;
         $userid = $request->input('userid');
@@ -392,8 +392,8 @@ class PostCommentController extends Controller
     }
 
     //設定の削除のルート
-    public function settingdelete(SearchSetting $searchsetting){
-        $searchsetting->delete();
+    public function setting_delete(SearchSetting $serachsetting){
+        $serachsetting->delete();
         return redirect('/search/setting');
     }
     
