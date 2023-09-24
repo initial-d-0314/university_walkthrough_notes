@@ -1,0 +1,20 @@
+.help-toggle {
+    font-style: normal;
+    cursor: pointer;
+}
+
+.help-counter{
+    font-style: normal;
+}
+
+.favorite-toggle {
+    font-style: normal;
+    cursor: pointer;
+}
+
+.helped {
+    color: rgb(37, 99, 235);
+}
+.favorited {
+    color: rgb(225, 58, 86);
+}

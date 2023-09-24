@@ -43,7 +43,7 @@
                     <input type="text" name="comment[title]" placeholder="タイトル" value="{{ $errors->any() ? old('comment.title'): $comment->title}}"/>
                     <br>
                     @if($errors->has('comment.title'))
-                    <div class="validerror">
+                    <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
                         @foreach($errors->get('comment.title') as $message)
                         <li>{{$message}}</li>
                         @endforeach
@@ -52,7 +52,7 @@
                     <h2>コメント</h2>
                     <textarea id="comment" name="comment[body]" placeholder="コメントを入力してください">{{ $errors->any() ? old('comment.body'): $comment->body}}</textarea>
                     @if($errors->has('comment.body'))
-                    <div class="validerror">
+                    <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
                         @foreach($errors->get('comment.body') as $message)
                         <li>{{$message}}</li>
                         @endforeach

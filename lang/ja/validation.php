@@ -13,7 +13,7 @@ return [
     |
     */
 
-        'accepted'             => ':attribute が未承認です',
+    'accepted'             => ':attribute が未承認です',
     'accepted_if'          => ':other が :value であるとき :attribute を承認してください',
     'active_url'           => ':attribute は有効なURLではありません',
     'after'                => ':attribute は :date より後の日付にしてください',

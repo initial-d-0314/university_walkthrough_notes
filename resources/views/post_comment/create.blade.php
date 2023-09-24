@@ -10,7 +10,7 @@
             <input type="text" name="post[title]" placeholder="タイトル" value="{{old('post.title')}}" /><br>
             <!--エラーがある場合リストで全部見せる-->
             @if($errors->has('post.title'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('post.title') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
@@ -21,7 +21,7 @@
             <textarea name="post[body]" placeholder="投稿内容を書いてね">{{old('post.body')}}</textarea><br>
             <!--エラーがある場合リストで全部見せる-->
             @if($errors->has('post.body'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('post.body') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
@@ -42,7 +42,7 @@
                 @endforeach
             </select>
             @if($errors->has('post.category_id'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('post.category_id') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
@@ -64,7 +64,7 @@
             @endif
             </select>
             @if($errors->has('post.university_id'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('post.university_id') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
@@ -80,19 +80,19 @@
             <input type="date" name="post[stdate]" value="{{old('post.stdate')}}" />
             <input type="time" name="post[sttime]" value="{{old('post.sttime')}}"><br>
             @if($errors->has('post.stdate'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('post.stdate') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
             @if($errors->has('post.sttime'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('post.sttime') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
             @if($errors->has('start_time'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('start_time') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
@@ -102,19 +102,19 @@
             <input type="date" name="post[endate]" value="{{old('post.endate')}}" />
             <input type="time" name="post[entime]" value="{{old('post.entime')}}"><br>
             @if($errors->has('post.endate'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('post.endate') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
             @if($errors->has('post.entime'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('post.entime') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
             @endif
             @if($errors->has('end_time'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('end_time') as $message)
             <li>{{$message}}</li>
             @endforeach</div>

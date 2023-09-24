@@ -6,11 +6,12 @@
     <div class="bg-white shadow-sm sm:rounded-lg">
     <div class="p-6 text-gray-900">
   <h1>ジャンル・カテゴリー一覧</h1>
-  <a href="/category/create">新規カテゴリ情報追加はこちら</a>
+  <a class="inline-flex items-center px-4 py-2 bg-blue-700 border border-transparent rounded-md  text-xs text-white hover:bg-blue-600 focus:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out"href="/category/create">新規カテゴリ情報追加はこちら</a>
   @foreach($genres as $genre)
   <hr>
-  <a class="underline"href="{{route('search_index', ['genreid' => $genre->id])}}">{{$genre->name}}</a>
-  <div>：{{$genre->description}}</div>
+  <div>
+  <a class="underline"href="{{route('search_index', ['genreid' => $genre->id])}}">{{$genre->name}}</a>：{{$genre->description}}
+  </div>
   <table class="min-w-full border border-black text-center">
     <thead>
       <tr>

@@ -17,7 +17,7 @@
                 @endforeach
         </select>
             @if($errors->has('univid'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('univid') as $message)
             <li>{{$message}}</li>
             @endforeach</div>
@@ -55,7 +55,7 @@
             フリーワード：
             <input type="text" name="keyword" placeholder="キーワード" value="{{ $errors->any() ? old('keword'):'' }}"/>
             @if($errors->has('keyword'))
-            <div class="validerror">
+            <div class="box-border bg-[#fce3e3] border-2 border-solid border-[#ba2020] rounded border-l-[8px] mt-2 indent-2">
             @foreach($errors->get('keyword') as $message)
             <li>{{$message}}</li>
             @endforeach</div>

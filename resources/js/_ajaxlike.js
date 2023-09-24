@@ -23,13 +23,7 @@ $(function () {
       //通信成功した時の処理
       .done(function (data) {
         console.log('success');
-        //テキストの書き換え。
-        if (thisText == "たすかった"){
-          $this.text('たすかった済');
-        }else{
-          $this.text('たすかった');
-        }
-        
+        $this.toggleClass('helped'); //likedクラスのON/OFF切り替え。
         $this.next('.help-counter').html(data.post_helps_count);
       })
       //通信失敗した時の処理
@@ -62,6 +56,7 @@ $(function () {
         }else{
           $this.text('お気に入り登録');
         }
+        $this.toggleClass('favorited'); //favoritedクラスのON/OFF切り替え。
       })
       //通信失敗した時の処理
       .fail(function () {

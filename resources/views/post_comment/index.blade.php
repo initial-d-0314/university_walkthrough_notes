@@ -34,12 +34,12 @@
                         @auth
                             @if (!$post->isHelpedBy(Auth::user()))
                                 <span class="helps">
-                                    <i class="help-toggle" data-post-id="{{ $post->id }}">たすかった</i>
+                                    <i class="help-toggle bg-gray-200 inline-flex items-center rounded-md border border-gray-300 px-4 py-2  shadow-sm transition ease-in-out hover:bg-gray-50" data-post-id="{{ $post->id }}">たすかった</i>
                                 <span class="help-counter">{{$post->helps_count}}</span>
                                 </span><!-- /.likes -->
                             @else
                                 <span class="helps">
-                                    <i class="help-toggle helped" data-post-id="{{ $post->id }}">たすかった</i>
+                                    <i class="help-toggle helped bg-gray-200 inline-flex items-center rounded-md border border-gray-300 px-4 py-2  shadow-sm transition ease-in-out hover:bg-gray-50" data-post-id="{{ $post->id }}">たすかった</i>
                                 <span class="help-counter">{{$post->helps_count}}</span>
                                 </span><!-- /.likes -->
                             @endif
