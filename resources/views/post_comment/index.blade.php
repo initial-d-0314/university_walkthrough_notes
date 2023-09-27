@@ -5,7 +5,7 @@
 <div class="bg-white shadow-sm sm:rounded-lg">
 <div class="p-6 text-gray-900">
     <h1 class="text-3xl">投稿一覧</h1>
-    <a ="inline-flex items-center px-4 py-2 bg-blue-700 border border-transparent rounded-md text-white hover:bg-blue-600 focus:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out" href ={{route('postcomment_create')}}>新規投稿作成</a>
+    <a class="inline-flex items-center px-4 py-2 bg-blue-700 border border-transparent rounded-md text-white hover:bg-blue-600 focus:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out" href ={{route('postcomment_create')}}>新規投稿作成</a>
 </div>
 </div>
 </div>

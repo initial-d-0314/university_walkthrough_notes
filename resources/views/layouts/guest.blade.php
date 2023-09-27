@@ -15,7 +15,10 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="h-screen w-full" style="background-image: url('/image/note_open.jpg'); background-repeat:no-repeat; background-size:cover">
+    <div class="absolute -z-10 h-full w-full inset-0 overflow-hidden">
+        <img class="object-cover h-full w-full" src="{{ asset('/image/note_open.jpg')}}" alt="" decoding="async"loading="lazy">
+        <div class="absolute inset-0 bg-gray-50 bg-opacity-80"></div>
+    </div>
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}

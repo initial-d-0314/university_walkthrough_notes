@@ -67,7 +67,8 @@ class PostCommentController extends Controller
 
     public function show(Post $post)
     {
-        return view('post_comment.show')->with(['post' => $post]);
+        $post_id = $post['id'];
+        return view('post_comment.show')->with(['post' => $post->getByhelpescount($post_id)]);
     }
     
     public function store(PostRequest $request,Post $post, Category $category)
@@ -135,7 +136,7 @@ class PostCommentController extends Controller
                 $post->delete();
                 return redirect('/post');
             }else{
-                return redirect('/post'.$post->id);
+                return redirect('/post/'.$post->id);
             }
         }else{
             abort(403,"投稿者ではないので削除できません");

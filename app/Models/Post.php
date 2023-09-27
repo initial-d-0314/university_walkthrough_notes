@@ -39,6 +39,11 @@ class Post extends Model
     {
     return $this::with(['genre','category','university','user'])->withCount('helps')->where('user_id',$user_id)->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
+    
+    function getByhelpescount(int $post_id)
+    {
+        return $this::with(['genre','category','university','user'])->withCount('helps')->where('id',$post_id)->first();
+    }
     // Userに対するリレーション（1対多）
     public function user()
     {
