@@ -131,9 +131,11 @@ class PostCommentController extends Controller
         $input = $request['post'];
         $userid = Auth::user()->id;
         if($post->user_id == $userid){
-            if($input["deletecheck"] == 'on'){
-            $post->delete();
-            return redirect('/post');
+            if(!empty($input["deletecheck"])){
+                $post->delete();
+                return redirect('/post');
+            }else{
+                return redirect('/post'.$post->id);
             }
         }else{
             abort(403,"投稿者ではないので削除できません");
@@ -177,7 +179,7 @@ class PostCommentController extends Controller
         $input = $request['comment'];
         $userid = Auth::user()->id;
         if($postcomment->user_id == $userid){
-            if($input["deletecheck"] == 'on'){
+            if(!empty($input["deletecheck"])){
             $postcomment->delete();
             }
             return redirect('/post/'.$post->id);

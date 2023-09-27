@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <x-app-layout>
-    <div class="h-full w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
+    <div class="h-screen w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
     <div class="max-w-7xl mx-auto py-6">
     <div class="bg-white shadow-sm sm:rounded-lg">
     <div class="p-6 text-gray-900">
@@ -18,7 +18,7 @@
         <div class="bg-white shadow-sm sm:rounded-lg">
         <div class="p-6 text-gray-900">
             <h1 class='text-2xl'>{{$post->title}}</h1>
-            <h2 class='text-base'>投稿ユーザー：{{ $post->user->name }}</a></h2>
+            <h2 class='text-base'>投稿ユーザー：<a class="underline" href="{{route('useradditional_index_other', ['user' => $post->user_id])}}">{{ $post->user->name }}</a></h2>
             <h2 class='text-base'>
             大学：<a class="underline" href="{{route('search_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a>
             ジャンル、カテゴリ：<a class="underline" href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a> <a class="underline" href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a>
