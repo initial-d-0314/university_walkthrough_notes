@@ -1,11 +1,5 @@
 <x-app-layout>
-<head>
-    <meta charset="utf-8">
-    <title>大学攻略ガイド</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-</head>
-<body>
+    <div class="h-screen w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
     <div class="py-12">
         <div class="max-w-7xl mx-auto">
             <div class="bg-white shadow-sm sm:rounded-lg">
@@ -25,18 +19,16 @@
     <h3>投稿の内容について</h3>
     このサイトは不特定多数の人物が利用すると考えられるため、
     情報源がある場合は、何らかの形で投稿に含めてください。
-    また、情報が誤りであるとわかった場合、その投稿をなるべく削除するようにしてください。
-    
-    投稿された情報は必ずしも正確であるとは限りませんので、自己の責任と判断でご利用ください。
+    また、情報が誤りであるとわかった場合、その投稿を削除するようにしてください。
+    このことから、投稿された情報は必ずしも正確であるとは限りませんので、自己の責任と判断でご利用ください。
     
     <h3>投稿のジャンルについて</h3>
     必ず適切なジャンル、カテゴリに投稿するようにしましょう。
     また、カテゴリはカテゴリ一覧ページから追加することができますが、
-    既存のカテゴリにが該当しないか、確認したうえで追加しましょう。
+    既存のカテゴリに該当しないか、確認しましょう。
 
     <h3>「課題」ジャンルについて</h3>
     投稿を行う前に、その投稿の内容がインターネットに投稿していいものか、必ず確かめましょう。
-    大丈夫であると確証がないならば投稿を行わないほうがよいでしょう。
     
     <h3>禁止行為について</h3>
     下記の行為を原則禁止とします。
@@ -48,4 +40,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </x-app-layout>

@@ -67,7 +67,8 @@ class PostCommentController extends Controller
 
     public function show(Post $post)
     {
-        return view('post_comment.show')->with(['post' => $post]);
+        $post_id = $post['id'];
+        return view('post_comment.show')->with(['post' => $post->getByhelpescount($post_id)]);
     }
     
     public function store(PostRequest $request,Post $post, Category $category)
@@ -131,9 +132,11 @@ class PostCommentController extends Controller
         $input = $request['post'];
         $userid = Auth::user()->id;
         if($post->user_id == $userid){
-            if($input["deletecheck"] == 'on'){
-            $post->delete();
-            return redirect('/post');
+            if(!empty($input["deletecheck"])){
+                $post->delete();
+                return redirect('/post');
+            }else{
+                return redirect('/post/'.$post->id);
             }
         }else{
             abort(403,"投稿者ではないので削除できません");
@@ -177,7 +180,7 @@ class PostCommentController extends Controller
         $input = $request['comment'];
         $userid = Auth::user()->id;
         if($postcomment->user_id == $userid){
-            if($input["deletecheck"] == 'on'){
+            if(!empty($input["deletecheck"])){
             $postcomment->delete();
             }
             return redirect('/post/'.$post->id);
@@ -358,7 +361,7 @@ class PostCommentController extends Controller
     */
     
     //設定一覧へのルート
-    public function index_setting(SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
+    public function setting_index(SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
     {
         $userid = Auth::user()->id;
         return view('search.settings')->with([
@@ -370,7 +373,7 @@ class PostCommentController extends Controller
     }
     
     //検索設定の保存
-    public function savesetting(SearchRequest $request,SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
+    public function setting_save(SearchRequest $request,SearchSetting $searchsetting,Genre $genre,Category $category,University $university)
     {
         $makeuserid = Auth::user()->id;
         $userid = $request->input('userid');
@@ -392,8 +395,8 @@ class PostCommentController extends Controller
     }
 
     //設定の削除のルート
-    public function settingdelete(SearchSetting $searchsetting){
-        $searchsetting->delete();
+    public function setting_delete(SearchSetting $serachsetting){
+        $serachsetting->delete();
         return redirect('/search/setting');
     }
     

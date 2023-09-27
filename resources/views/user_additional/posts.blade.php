@@ -1,94 +1,92 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <x-app-layout>
-<head>
-    <meta charset="utf-8">
-    <title>大学攻略ガイド</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-</head>
-
-<body>
-    <h1>{{$user->id == \Auth::user()->id ? "自分" : $user->name}}の投稿一覧</h1>
+<div class="h-screen w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
+    <div class="max-w-7xl mx-auto py-6">
+    <div class="bg-white shadow-sm sm:rounded-lg">
+    <div class="p-6 text-gray-900">
+    <h1 class="text-3xl">{{$user->id == \Auth::user()->id ? "自分" : $user->name}}の投稿一覧</h1>
+    <div class="flex justify-start items-center gap-4">
     <div>
-        @if($user->image_url)
-            <div class="image">
-                <img src="{{ $user->image_url }}" alt="画像が読み込めません。"/>
-            </div>
-        @endif
-        <p>ユーザーid：{{$user->id}}</p>
-        <p>所属大学：{{$user->university_id ?$user->university->name : "（未登録）"}}</p>
-        <p>区分：{{$user->grade ? : "（未登録）"}}</p>
-        <p>分野：{{$user->section ? : "（未登録）"}}</p>
-        <p>自己紹介：{{$user->introduction ? : "（未登録）"}}</p>
-        @if($user->id == \Auth::user()->id)<p>[<a href="/useradditional/edit">編集</a>]</p>@endif
-        <p>[<a href="{{route('search_index', ['userid' => $user->id])}}">このユーザーの投稿を検索する</a>]</p>
-@if($user->id == \Auth::user()->id)
-        <p>[<a href="/useradditional/my/favorite">自分のお気に入り一覧</a>]</p>
-@else
-        <p>[<a href="/useradditional/{{$user->id}}/favorite">このユーザーのお気に入り一覧</a>]</p>
-@endif
+        <img class="h-24 object-contain" src="{{ $user->image_url }}" alt="画像が読み込めません。"/>
     </div>
-    <div class='posts'>
-        @foreach ($posts as $post)
-            <div style="padding: 10px; margin-bottom: 10px; border: 1px solid;">
-                <div class='post'>
-                <h1 class='title'>{{$post->title}}</h1>
-                <h2 class='user'>投稿ユーザー：{{ $post->user->name }}</a></h2>
-                <h2 class='university'>大学：<a href="{{route('search_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a></h2>
-                <h2 class='genrecategory'>ジャンル、カテゴリ：<a href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a>
-                <a href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a></h2>
-                @if($post->use_time == "use")
-                <h3 class='time'>
-                    開始時刻：{{ $post->start_time }}
-                    終了時刻：{{ $post->end_time }}
-                </h3>
-                @endif
-                        <hr>
-                        <p class='body'>{{ $post->body }}</p>
-                        @if($post->image_url)
-                        <div class="image">
-                            <img src="{{ $post->image_url }}" alt="画像が読み込めません。"/>
-                        </div>
-                        @endif
-                        <hr />
-                        <h3 class='category'>
-                            投稿時刻：{{ $post->created_at }}
-                            編集時刻：{{ $post->updated_at }}
-                        </h3>
-                        @auth
-                            @if (!$post->isHelpedBy(Auth::user()))
-                                <span class="helps">
-                                    <i class="help-toggle" data-post-id="{{ $post->id }}">たすかった</i>
-                                <span class="help-counter">{{$post->helps_count}}</span>
-                                </span><!-- /.likes -->
-                            @else
-                                <span class="helps">
-                                    <i class="help-toggle helped" data-post-id="{{ $post->id }}">たすかった</i>
-                                <span class="help-counter">{{$post->helps_count}}</span>
-                                </span><!-- /.likes -->
-                            @endif
-                            @if (!$post->isFavoritedBy(Auth::user()))
-                                <span class="favorites">
-                                    <i class="favorite-toggle" data-post-id="{{ $post->id }}">お気に入り登録</i>
-                                </span>
-                            @else
-                                <span class="favorites">
-                                    <i class="favorite-toggle favorited" data-post-id="{{ $post->id }}">お気に入り解除</i>
-                                </span>
-                            @endif
-                        @endauth
-                        <h3 class='post-info'><a href="post/{{ $post->id }}">コメント、投稿詳細</a></h3>
-                        @if($post->user_id==auth()->id())
-                        <h3 class="edit">[<a href="/post/{{ $post->id }}/edit">編集</a>]</h3>
-                        @endif
-
-                </div>
-            </div>
-        @endforeach
-        <div>
-            {{ $posts->onEachSide(5)->links() }}
+    <div>
+        <div>ユーザーid：{{$user->id}}</div>
+        <div>所属大学：{{$user->university_id ?$user->university->name : "（未登録）"}}</div>
+        <div>区分：{{$user->grade ? : "（未登録）"}}</div>
+        <div>分野：{{$user->section ? : "（未登録）"}}</div>
+        <div>自己紹介：{{$user->introduction ? : "（未登録）"}}</div>
+    </div>
+    </div>
+    @if($user->id == \Auth::user()->id)<p>[<a class="underline" href="{{route('useradditional_edit')}}">編集</a>]</p>@endif
+    <p>[<a class="underline" href="{{route('search_index', ['userid' => $user->id])}}">このユーザーの投稿を検索する</a>]</p>
+@if($user->id == \Auth::user()->id)
+    <p>[<a class="underline" href="{{route('useradditional_favorite')}}">自分のお気に入り一覧</a>]</p>
+@else
+    <p>[<a class="underline" href="{{route('useradditional_favorite_other',['user' => $user->id])}}">このユーザーのお気に入り一覧</a>]</p>
+@endif
+</div>
+</div>
+</div>
+@foreach ($posts as $post)
+    <div class="max-w-7xl mx-auto py-4">
+    <div class="bg-white shadow-sm sm:rounded-lg">
+    <div class="p-6 text-gray-900">
+        <h1 class='text-2xl'>{{$post->title}}</h1>
+        <h2 class='text-base'>投稿ユーザー：<a class="underline" href="{{route('useradditional_index_other', ['user' => $post->user_id])}}">{{ $post->user->name }}</a></h2>
+        <h2 class='text-base'>
+        大学：<a class="underline" href="{{route('search_index', ['universityid' => $post->university->id])}}">{{$post->university->name}}</a>
+        ジャンル、カテゴリ：<a class="underline" href="{{route('search_index', ['genreid' => $post->genre->id ])}}">{{ $post->genre->name}}</a> <a class="underline" href="{{route('search_index', ['genreid' => $post->genre->id])}}">{{ $post->category->name }}</a>
+        </h2>
+        @if($post->use_time == "use")
+        <h2 class='text-base'>開始時刻：{{ $post->start_time }} 終了時刻：{{ $post->end_time }}</h2>
+        @endif
+        <hr class="h-px my-4 bg-gray-400 border-0 dark:bg-gray-700">
+        <p class="text-1xl">{{ $post->body }}</p>
+        @if($post->image_url)
+        <hr class="h-px my-4 bg-gray-400 border-0 dark:bg-gray-700">
+        <img class="h-20 object-contain object-center" src="{{ $post->image_url }}" alt="画像が読み込めません。"/>
+        @endif
+        <hr class="h-px my-4 bg-gray-400 border-0 dark:bg-gray-700">
+        <h3 class="text-sm">投稿時刻：{{ $post->created_at }} 編集時刻：{{ $post->updated_at }} </h3>
+        @auth
+        <div class="">
+        @if (!$post->isHelpedBy(Auth::user()))
+        <div class="bg-gray-200 inline-flex items-center rounded-md border border-gray-300 px-2 py-2 shadow-sm">
+            <i class="help-toggle" data-post-id="{{ $post->id }}">たすかった：</i>
+            <i class="help-counter">{{$post->helps_count}}</i>
         </div>
-</body>
+        @else
+        <div class="bg-gray-200 inline-flex items-center rounded-md border border-gray-300 px-2 py-2 shadow-sm">
+            <i class="help-toggle helped" data-post-id="{{ $post->id }}">たすかった：</i>
+            <i class="help-counter">{{$post->helps_count}}</i>
+        </div>
+        @endif
+        @if (!$post->isFavoritedBy(Auth::user()))
+        <div class="bg-gray-200 inline-flex items-center rounded-md border border-gray-300 px-2 py-2 shadow-sm">
+            <i class="favorite-toggle" data-post-id="{{ $post->id }}">お気に入り登録</i>
+        </div>
+        @else
+        <div class="bg-gray-200 inline-flex items-center rounded-md border border-gray-300 px-2 py-2 shadow-sm">
+            <i class="favorite-toggle favorited" data-post-id="{{ $post->id }}">お気に入り解除</i>
+        </div>
+        @endif
+        </div>
+        @endauth
+        <div class="flex justify-start items-center gap-4">
+        <div><a class="underline" href="{{route('postcomment_show', ['post' => $post->id])}}">コメント、投稿詳細</a></div>
+        @if($post->user_id==auth()->id())
+        <div>[<a class="underline" href="{{route('postcomment_edit', ['post' => $post->id])}}">編集</a>]</div>
+        @endif
+        </div>
+    </div>
+    </div>
+    </div>
+@endforeach
+<div class="max-w-7xl mx-auto py-6">
+<div class="bg-white shadow-sm sm:rounded-lg">
+<div class="p-6 text-gray-900">
+        {{ $posts->onEachSide(5)->links() }}
+</div>
+</div>
+</div>
 </x-app-layout>
-</html>
