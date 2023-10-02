@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <x-app-layout>
-<div class="h-screen w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
+<div class="p-8">
     <div class="max-w-7xl mx-auto py-6">
     <div class="bg-white shadow-sm sm:rounded-lg">
     <div class="p-6 text-gray-900">
     <h1 class="text-3xl">{{$user->id == \Auth::user()->id ? "自分" : $user->name}}の投稿一覧</h1>
     <div class="flex justify-start items-center gap-4">
+    @if($user->image_url)
     <div>
         <img class="h-24 object-contain" src="{{ $user->image_url }}" alt="画像が読み込めません。"/>
     </div>
+    @endif
     <div>
         <div>ユーザーid：{{$user->id}}</div>
         <div>所属大学：{{$user->university_id ?$user->university->name : "（未登録）"}}</div>

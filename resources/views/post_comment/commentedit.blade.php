@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <x-app-layout>
-<div class="h-screen w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">
+<div class="p-8">
 <div class="max-w-7xl mx-auto py-4">
 <div class="bg-white shadow-sm sm:rounded-lg">
 <div class="p-6 text-gray-900">

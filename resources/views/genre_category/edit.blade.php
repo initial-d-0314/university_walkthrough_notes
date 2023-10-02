@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <x-app-layout>
-    <div class="h-screen w-full" style="background-image: url('/image/p0307_m.png'); background-repeat:no-repeat; background-size:cover">F
-    <div class="max-w-7xl mx-auto">
+    <div class="p-8">F
+    <div class="max-w-7xl mx-auto py-6">
     <div class="bg-white shadow-sm sm:rounded-lg">
     <div class="p-6 text-gray-900">
         <h1 class="text-3xl">カテゴリ情報変更</h1>
