@@ -17,7 +17,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100" style="background-image: url('/image/p0307_m.png'); background-repeat:repeat-y; background-size:100%;">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -31,7 +31,9 @@
 
             <!-- Page Content -->
             <main>
+            <div class="w-full">
                 {{ $slot }}
+            </div>
             </main>
         </div>
     </body>
