@@ -28,8 +28,8 @@ You can also download and use them.
 After installing the above required packages, please run 'php artisan serve' command.
 
 The test user and password are as follows.
-email:
-password:
+email:test@gmail.com
+password:test
 
 ## Note
 Users can add information about category and university,
