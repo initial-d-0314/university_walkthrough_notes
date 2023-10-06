@@ -49,10 +49,10 @@ password:test
 ![ER diagram](readme_image/ER.png)
 
 ## Future updates planned:
-Update layout for smart phones
-Add follow function
-Processing of deleted user posts
-Function to delete a post after a selected date and time.
+-Update layout for smart phones
+-Add follow function
+-Processing of deleted user posts
+-~~Function to delete a post after a selected date and time~~abandoned due to Heroku's fee system
 
 ## Author
 Daigo Kuroki
